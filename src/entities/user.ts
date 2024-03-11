@@ -1,6 +1,7 @@
 
-class User {
-    id!: number;
+export class User {
+
+    id!: string;
     password!: string;
     last_login!: Date;
     is_superuser!: boolean;
@@ -20,4 +21,22 @@ class User {
     // accounts_user_user_permissions!: UserPermission[];
     // django_admin_log!: AdminLog[];
     // mailing_mail!: Mail[];
+
+    constructor() {
+        this.id = '';
+        this.password = '';
+        this.last_login = new Date();
+        this.is_superuser = false;
+        this.username = '';
+        this.first_name = '';
+        this.last_name = '';
+        this.email = '';
+        this.is_staff = false;
+        this.is_active = false;
+        this.date_joined = new Date();
+        this.bank_id = 0;
+        this.status = '';
+        this.phone = '';
+        this.send_me_emails = false;
+    }
 }

@@ -1,5 +1,7 @@
 import { UserRepository } from '../../interfaces/userRepository';
-import { PrismaUserAdapter as PrismaAdapter } from '../../adapters/userDatabase';
+import { PrismaUserAdapter as PrismaAdapter } from '../../adapters/prisma/userDatabase';
+import { User } from '../../entities/user';
+
 
 export class GetUser {
     constructor(private readonly userRepository: UserRepository) {} 
@@ -7,6 +9,7 @@ export class GetUser {
     async execute(userId: string): Promise<User | null> {
       try {
         const user = await this.userRepository.findById(userId);
+
         return user;
       } catch (error) {
         // Handle errors appropriately
