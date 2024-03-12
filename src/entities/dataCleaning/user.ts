@@ -9,15 +9,7 @@ export function validateUser(data: any): User {
     if (!jsonData.id) {
       errors.push('Missing required attribute: id');
     }
-  
-    if (!jsonData.name) {
-      errors.push('Missing required attribute: name');
-    }
-  
-    if (!jsonData.email || !validateEmail(jsonData.email)) {  // Add email validation
-      errors.push('Invalid or missing email address');
-    }
-  
+    
     if (errors.length > 0) {
       throw new Error(`Invalid user data: ${errors.join(', ')}`);  // Combine errors in message
     }
@@ -25,14 +17,8 @@ export function validateUser(data: any): User {
     var user = new User();
 
     user.id = jsonData.id;
-    user.email = jsonData.email;
   
     return user;
-  }
-  
-/* Check valid email */
-function validateEmail(email: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
 export function validateUserId(data: any): string {

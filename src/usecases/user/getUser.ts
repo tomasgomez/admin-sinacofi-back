@@ -6,15 +6,15 @@ import { User } from '../../entities/user';
 export class GetUser {
     constructor(private readonly userRepository: UserRepository) {} 
   
-    async execute(userId: string): Promise<User | null> {
+    async execute(userId: string): Promise<User | Error> {
       try {
         const user = await this.userRepository.findById(userId);
 
         return user;
-      } catch (error) {
+      } catch (error:any) {
         // Handle errors appropriately
         console.error('Error fetching user:', error);
-        return null;
+        return error;
       }
     }
   }

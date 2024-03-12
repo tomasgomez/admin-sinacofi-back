@@ -1,5 +1,14 @@
 version: "3.8"
 services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: sinacofi_database
+      POSTGRES_USER: sinacofi
+      POSTGRES_PASSWORD: sinacofi123
+    ports:
+      - "5432:5432"
+
   webapp:
     build: .
     image: admin-sinacofi
@@ -11,3 +20,9 @@ services:
       - "8080:3000"
     volumes:
       - ${LOG_PATH:-./logs/}:/var/log
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://sinacofi:sinacofi123@postgres:5432/sinacofi_database
+      NODE_ENV: production
+    command: ["npm", "start"]

@@ -1,6 +1,11 @@
 import {
-  GetUser
+  GetUser,
 } from '@/usecases/user/getUser';
+
+import {
+  CreateUser
+} from '@/usecases/user/createUser';
+
 import {
   NextApiRequest,
   NextApiResponse
@@ -11,7 +16,8 @@ import {
 } from '@/adapters/prisma/userDatabase';
 
 import {
-  validateUserId
+  validateUserId,
+  validateUser
 } from '../../entities/dataCleaning/user';
 import {
   User
@@ -46,7 +52,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
       }
       break;
     case 'POST':
-      res.status(405).end('Method Not Allowed');
+      try {
+        console.log('Creating user...');
+
+        /* Validate the request body and create a User object */
+        var checkedUser = validateUser(req.body);
+
+        if (checkedUser instanceof Error) {
+          res.status(400).json(checkedUser);
+          return;
+        }
+
+        /* Use the PrismaUserAdapter to create the user in the database */
+        var newUser = await new CreateUser(new PrismaUserAdapter).execute(checkedUser);
+
+        /* Return the new user */
+        res.status(201).json(newUser);
+
+      } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json(new Error('Internal server error'));
+      }
       break;
     case 'PUT':
       res.status(405).end('Method Not Allowed');
