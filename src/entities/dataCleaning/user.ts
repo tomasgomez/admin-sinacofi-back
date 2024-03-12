@@ -30,9 +30,8 @@ export function validateUser(data: any): User {
     return user;
   }
   
-  // Optional email validation function (you can implement your desired logic)
-  function validateEmail(email: string): boolean {
-    // Implement email address validation logic (e.g., regular expression)
+/* Check valid email */
+function validateEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
