@@ -1,4 +1,4 @@
-import { User } from '../../entities/user';
+import { User } from '../user';
 
 export function validateUser(data: any): User {
     // Type assertion (optional, if you're sure data is an object)

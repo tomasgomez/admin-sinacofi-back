@@ -1,10 +1,10 @@
 import {
   GetUser,
-} from '@/usecases/user/getUser';
+} from '@/backend/usecases/user/getUser';
 
 import {
   CreateUser
-} from '@/usecases/user/createUser';
+} from '@/backend/usecases/user/createUser';
 
 import {
   NextApiRequest,
@@ -13,15 +13,15 @@ import {
 
 import {
   PrismaUserAdapter
-} from '@/adapters/prisma/userDatabase';
+} from '@/backend/adapters/prisma/userDatabase';
 
 import {
   validateUserId,
   validateUser
-} from '../../entities/dataCleaning/user';
+} from '../../backend/entities/dataCleaning/user';
 import {
   User
-} from '../../entities/user';
+} from '../../backend/entities/user';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse < User | Error > ) {
   const method = req.method;
