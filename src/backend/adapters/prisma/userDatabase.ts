@@ -1,10 +1,10 @@
 import {
   UserRepository
-} from '../interfaces/userRepository';
+} from '../../interfaces/userRepository';
 
 import {
   User
-} from '../entities/user';
+} from '../../entities/user';
 
 import {
   PrismaClientWrapper
