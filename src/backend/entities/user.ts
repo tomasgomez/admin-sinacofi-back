@@ -12,6 +12,7 @@ export class User {
     region: string; // Region of the user (by default: Metropolitana)
     comunne: string; // Comunne of the user 
     status: string; // Status of the user (A - Active, S - Suspended, D - Deleted)
+    email: string; // Email of the user
 
     /* Optional fields, only required for Tratador de Mensajes */
     user_message_level?: string; // Level of the user to send messages, if the level is 3, the user will send messages to level 3, 2 and 1 
@@ -30,6 +31,7 @@ export class User {
         this.public_name = '';
         this.user_group = '';
         this.user_profile = '';
+        this.email = '';
         this.area = '';
         this.location = '';
         this.region = '';
