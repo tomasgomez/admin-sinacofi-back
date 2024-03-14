@@ -24,6 +24,8 @@ export class PrismaClientWrapper {
   }
 
   getClient(): PrismaClient {
+        this.connect();
+        
         return this.client;
     }
 }
