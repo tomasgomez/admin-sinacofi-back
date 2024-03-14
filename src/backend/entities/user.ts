@@ -13,6 +13,7 @@ export class User {
     comunne: string; // Comunne of the user 
     status: string; // Status of the user (A - Active, S - Suspended, D - Deleted)
     email: string; // Email of the user
+    institution: string; // Financial institution of the user
 
     /* Optional fields, only required for Tratador de Mensajes */
     user_message_level?: string; // Level of the user to send messages, if the level is 3, the user will send messages to level 3, 2 and 1 
@@ -36,6 +37,7 @@ export class User {
         this.location = '';
         this.region = '';
         this.comunne = '';
+        this.institution = '';
         this.status = '';
         this.user_message_level = '';
         this.signature_class = '';
