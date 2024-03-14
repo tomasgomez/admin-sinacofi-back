@@ -46,3 +46,18 @@ export class User {
         this.dniElectronicSignature = '';
     }
 }
+
+export const validEditableData = [
+    "email",
+    "passwordExpirationDate",
+    "location",
+    "region",
+    "comunne",
+    "institutionId",
+    "areaId",
+    "userMessageLevel",
+    "signatureClass",
+    "signatureLevel",
+    "passwordElectronicSignature",
+    "dniElectronicSignature"
+  ]

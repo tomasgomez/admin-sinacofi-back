@@ -52,4 +52,26 @@ export class PrismaUserAdapter implements UserRepository {
     }
   }
 
+  async update(user: User): Promise < User | Error > {
+    try {
+      console.log('Updating user...');
+
+      const prisma = new PrismaClientWrapper().getClient();
+
+      /* Update the user */
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: user
+      });
+
+      return updatedUser;
+    } catch (error: any) {
+
+      console.error('Error updating user:', error);
+      return error;
+    }
+  }
+
 }
