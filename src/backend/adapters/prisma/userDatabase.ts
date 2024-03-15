@@ -16,10 +16,12 @@ export class PrismaUserAdapter implements UserRepository {
     try {
       console.log('Fetching user...' + id);
 
-      const prisma = new PrismaClientWrapper().getClient();
+      const prisma = new PrismaClientWrapper();
+
+      const prismaClient = await prisma.getClient();
 
       /* Find a user by their ID */
-      const user = await prisma.user.findUnique({
+      const user = await prismaClient.user.findUnique({
         where: {
           id
         }
@@ -37,7 +39,7 @@ export class PrismaUserAdapter implements UserRepository {
     try {
       console.log('Creating user...');
 
-      const prisma = new PrismaClientWrapper().getClient();
+      const prisma = await new PrismaClientWrapper().getClient();
 
       /* Create a new user */
       const newUser = await prisma.user.create({
@@ -56,7 +58,7 @@ export class PrismaUserAdapter implements UserRepository {
     try {
       console.log('Updating user...');
 
-      const prisma = new PrismaClientWrapper().getClient();
+      const prisma = await new PrismaClientWrapper().getClient();
 
       /* Update the user */
       const updatedUser = await prisma.user.update({

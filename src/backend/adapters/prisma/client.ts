@@ -4,6 +4,7 @@ export class PrismaClientWrapper {
   private client: PrismaClient;
 
   constructor() {
+    console.log("CONSTRUCTOR");
     this.client = new PrismaClient();
   }
 
@@ -23,9 +24,12 @@ export class PrismaClientWrapper {
     return this.client.isConnected();
   }
 
-  getClient(): PrismaClient {
-        this.connect();
-        
+  async getClient(): PrismaClient {
+        console.log('Connecting client...');
+        await this.connect();
+
+        console.log('Client connected');
+
         return this.client;
     }
 }

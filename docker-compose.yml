@@ -23,6 +23,6 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://sinacofi:sinacofi123@postgres:5432/sinacofi_database
+      DATABASE_URL: postgres://sinacofi:sinacofi123@localhost:5432/sinacofi_database
       NODE_ENV: production
     command: ["npm", "start"]
