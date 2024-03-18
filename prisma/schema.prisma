@@ -30,19 +30,20 @@ model User {
 }
 
 model Area {
-  id               String    @id @default(auto()) // Area code id (e.g. 037)
+  id               String    @id // Area code id (e.g. 037)
   name             String    // Name of the area (e.g. IT)
   description      String    // Description of the area (e.g. Information Technology)
-  distributionPath String?   // Distribution 
-  pathPams         String?   // Path of the PAMs
-  pathSams         String?   // Path of the SAMs
-  ftiiCode         String?   // FTII code
-  conectivityType  String?   // Connectivity type (TIP_BROW, TIP_FSVR, TIP_FTRA)
+  institutionCode  String    // Institution code
+  distributionPath String   // Distribution 
+  pathPams         String   // Path of the PAMs
+  pathSams         String   // Path of the SAMs
+  ftiiCode         String   // FTII code
+  conectivityType  String   // Connectivity type (TIP_BROW, TIP_FSVR, TIP_FTRA)
   institutions     Institution[] // Establishing a many-to-many relationship
 }
 
 model Institution {
-  id         String    @id @default(auto()) // Financial institution code id (e.g. 037)
+  id         String    @id // Financial institution code id (e.g. 037)
   fullName   String    // Complete name of the financial institution (e.g. Banco Santander)
   rut        String    // RUT of the financial institution (e.g. 97.036.000-K)
   name       String    // Name abbreviation of the financial institution (e.g. Santander)

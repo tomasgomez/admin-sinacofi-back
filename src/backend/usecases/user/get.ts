@@ -21,4 +21,4 @@ export class GetUser {
 
 
 const userRepository: UserRepository = new PrismaAdapter();
-const getUserUseCase = new GetUser(userRepository); // Add it on the api layer
+export const getUserUseCase = new GetUser(userRepository); // Add it on the api layer

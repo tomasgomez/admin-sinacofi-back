@@ -25,4 +25,4 @@ export class CreateUser {
 
 
 const userRepository: UserRepository = new PrismaAdapter();
-const createUserUseCase = new CreateUser(userRepository); 
+export const createUserUseCase = new CreateUser(userRepository); 

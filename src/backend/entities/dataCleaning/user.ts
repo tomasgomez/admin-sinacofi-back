@@ -38,7 +38,7 @@ export function validateUserEdition(id: string, data: any): User {
   return user;
 }
 
-export function validateUserId(data: any): string {
+export function validateUserId(data: any): string | Error {
   const {
     id
   } = data;
