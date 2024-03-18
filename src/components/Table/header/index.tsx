@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined';
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   StyledInboxHeaderContent,
@@ -9,11 +9,18 @@ import {
   StyledSubtitleAndIcons,
   StyledIconsContent,
 } from "./style";
-import { Autocomplete, InputAdornment, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Dropdrown from "@/components/Dropdown";
 import { Search } from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 
-const SearchField = ({ data, label } : { data: any, label: string }) => {
+const SearchField = ({ data, label }: { data: any; label: string }) => {
   return (
     <Autocomplete
       freeSolo
@@ -31,7 +38,7 @@ const SearchField = ({ data, label } : { data: any, label: string }) => {
           label="Search input"
           InputProps={{
             ...params.InputProps,
-            type: 'search',
+            type: "search",
             endAdornment: (
               <InputAdornment position="end">
                 <Search />
@@ -41,11 +48,45 @@ const SearchField = ({ data, label } : { data: any, label: string }) => {
         />
       )}
     />
-  )
-}
+  );
+};
 
-export default function Header(props: { title: string, label: string, amountMessages: number, filters: any }) {
-  const { amountMessages, title, label, filters } = props;
+const AddElement = ({ label }: { label: string }) => {
+  return (
+    <Button
+      component="label"
+      role={undefined}
+      variant="contained"
+      startIcon={<AddIcon fontSize="small" />}
+      style={{
+        backgroundColor: "#00B2E2",
+        color: "#FFFFFF",
+        textTransform: "none",
+      }}
+    >
+      {label}
+    </Button>
+  );
+};
+
+export default function Header(props: {
+  title: string;
+  label: string;
+  amountMessages?: number;
+  filters?: any;
+  withIcons?: boolean;
+  withSearchBar?: boolean;
+  addLabelButton?: string;
+}) {
+  const {
+    amountMessages,
+    title,
+    label,
+    filters,
+    withIcons,
+    withSearchBar,
+    addLabelButton,
+  } = props;
   return (
     <StyledInboxHeaderContent>
       <StyledTitleAndDropdown
@@ -56,44 +97,57 @@ export default function Header(props: { title: string, label: string, amountMess
       >
         <Typography variant="h5">{title}</Typography>
         <div style={{ display: "flex", gap: "12px" }}>
-          <SearchField data={[]} label="test" />
-          {filters && filters.map((filter: any) => (
-            <Dropdrown label={filter.label} options={filter.list} widthDropdown={filter.width} />
-            // <Dropdrown label={label} widthDropdown={300} />
-          ))}
+          {withSearchBar && <SearchField data={[]} label="test" />}
+          {filters &&
+            filters.map((filter: any) => (
+              <Dropdrown
+                label={filter.label}
+                options={filter.list}
+                widthDropdown={filter.width}
+              />
+              // <Dropdrown label={label} widthDropdown={300} />
+            ))}
+          {addLabelButton && <AddElement label={addLabelButton} />}
         </div>
       </StyledTitleAndDropdown>
-      <StyledSubtitleAndIcons
-        sx={{
-          m: 2,
-          mt: 0,
-        }}
-        width="100%"
-      >
-        <Typography variant="subtitle1" style={{ color: "#898989" }}>
-          {amountMessages} mensajes en total
-        </Typography>
-        <StyledIconsContent width={88}>
-          <RefreshIcon
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => console.log("Refresh")}
-          />
-          <PrintOutlinedIcon
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => console.log("Print")}
-          />
-          <FileDownloadOutlinedIcon
-            style={{
-              cursor: "pointer",
-            }}
-            onClick={() => console.log("Download")}
-          />
-        </StyledIconsContent>
-      </StyledSubtitleAndIcons>
+
+      {(amountMessages || withIcons) && (
+        <StyledSubtitleAndIcons
+          sx={{
+            m: 2,
+            mt: 0,
+          }}
+          width="100%"
+        >
+          {amountMessages && (
+            <Typography variant="subtitle1" style={{ color: "#898989" }}>
+              {amountMessages} mensajes en total
+            </Typography>
+          )}
+          {withIcons && (
+            <StyledIconsContent width={88}>
+              <RefreshIcon
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => console.log("Refresh")}
+              />
+              <PrintOutlinedIcon
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => console.log("Print")}
+              />
+              <FileDownloadOutlinedIcon
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => console.log("Download")}
+              />
+            </StyledIconsContent>
+          )}
+        </StyledSubtitleAndIcons>
+      )}
     </StyledInboxHeaderContent>
   );
 }

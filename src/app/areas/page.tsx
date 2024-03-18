@@ -4,7 +4,7 @@ import { Alignment, Columns, Data } from "@/components/Table/type";
 import { EditOutlined } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { mockData } from "../users/mock-data";
+import { mockData } from "./mock-data";
 import Header from "@/components/Table/header";
 
 const columns: Columns[] = [
@@ -44,12 +44,16 @@ const columns: Columns[] = [
     align: Alignment.LEFT,
     render: ({ value }: { value: any }) => {
       return (
-        <IconButton aria-label="Editar"  size="small" onClick={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          console.log({ value })
-        }}>
-          <EditOutlined fontSize="small"  />
+        <IconButton
+          aria-label="Editar"
+          size="small"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log({ value });
+          }}
+        >
+          <EditOutlined fontSize="small" />
         </IconButton>
       );
     },
@@ -126,35 +130,20 @@ const Users = () => {
   }, []);
 
   return (
-    <div style={{
-      color: "#000000",
-      padding: "32px 24px",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      gap: "32px",
-    }}>
+    <div
+      style={{
+        color: "#000000",
+        padding: "32px 24px",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "32px",
+      }}
+    >
       {/* <Typography variant="h5">Usuarios</Typography> */}
-      <Header
-        title="Usuarios"
-        label="Institución"
-        filters={[
-          {
-            label: "Institutición",
-            list: institutionList,
-          },
-          {
-            label: "Area",
-            list: areaList,
-          }
-        ]}
-        amountMessages={data.length}
-        withSearchBar
-      />
-      {!loading && (
-        <EnhancedTable rows={data} columns={columns} />
-      )}
+      <Header title="Areas" label="Institución" addLabelButton="Agregar Area" />
+      {!loading && <EnhancedTable rows={data} columns={columns} />}
     </div>
-  )
-}
+  );
+};
 export default Users;

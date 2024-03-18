@@ -56,11 +56,13 @@ export interface EnhancedTableProps {
   orderBy: string;
   rowCount: number;
   withCheckboxAll?: boolean;
+  withStatusSwitch?: boolean;
   columns?: any[];
 }
 
 export interface TableProps {
   withCheckbox?: boolean;
+  withSwitch?: boolean;
   labelId: string;
   row: any;
   columns: any;

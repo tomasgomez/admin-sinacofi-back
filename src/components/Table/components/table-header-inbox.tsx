@@ -17,7 +17,8 @@ export function TableHeader(props: EnhancedTableProps) {
     rowCount,
     onRequestSort,
     withCheckboxAll,
-    columns = []
+    withStatusSwitch,
+    columns = [],
   } = props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -40,6 +41,7 @@ export function TableHeader(props: EnhancedTableProps) {
             />
           </TableCell>
         )}
+        {withStatusSwitch && <TableCell>Estado</TableCell>}
         {columns.map((columnsData) => (
           <StyledTableCellHeader
             key={columnsData.id}
@@ -56,7 +58,6 @@ export function TableHeader(props: EnhancedTableProps) {
             </TableSortLabel>
           </StyledTableCellHeader>
         ))}
-        <TableCell />
       </TableRow>
     </TableHead>
   );
