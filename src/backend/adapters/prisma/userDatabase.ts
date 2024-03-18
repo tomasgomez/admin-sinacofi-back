@@ -8,7 +8,7 @@ import {
 
 import {
   PrismaClientWrapper
-} from './client';
+} from './prismaWrapper';
 
 
 export class PrismaUserAdapter implements UserRepository {
@@ -23,7 +23,7 @@ export class PrismaUserAdapter implements UserRepository {
       /* Find a user by their ID */
       const user = await prismaClient.user.findUnique({
         where: {
-          id
+          dni: id
         }
       });
 
