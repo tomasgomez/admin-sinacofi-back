@@ -16,6 +16,7 @@ export interface Data {
   institution: string;
   area: string;
   status: number;
+  actions: any;
 }
 
 export type Order = "asc" | "desc";
@@ -43,7 +44,7 @@ export enum Alignment {
   LEFT = "left",
   RIGHT = "right",
   CENTER = "center",
-};
+}
 
 export interface EnhancedTableProps {
   numSelected: number;
@@ -56,13 +57,16 @@ export interface EnhancedTableProps {
   orderBy: string;
   rowCount: number;
   withCheckboxAll?: boolean;
+  withStatusSwitch?: boolean;
   columns?: any[];
 }
 
 export interface TableProps {
   withCheckbox?: boolean;
+  withSwitch?: boolean;
   labelId: string;
   row: any;
+  rowOptions?: any;
   columns: any;
   isItemSelected?: boolean;
   handleClick: (event: React.MouseEvent<unknown>, id: number) => void;

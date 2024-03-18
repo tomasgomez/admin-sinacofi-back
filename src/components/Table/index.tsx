@@ -9,25 +9,30 @@ import TableContentRows from "./components/table-rows-inbox";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import { StyledTabCell } from "./style";
-// import { rows } from "../../messages/inbox/mock";
 import { Data, Order } from "./type";
 import { getComparator, stableSort } from "./utils";
 
-// const rows: Data[] = [];
-
 type TablePropsType = {
   withCheckbox?: boolean;
-  rows: Data[],
-  columns: any[],
-}
+  withSwitch?: boolean;
+  rows: any[];
+  columns: any[];
+  rowOptions?: any;
+  defaultOrderKey?: keyof Data;
+};
 
 export default function EnhancedTable({
   withCheckbox,
+  withSwitch,
   rows = [],
-  columns = []
+  columns = [],
+  rowOptions = {},
+  defaultOrderKey,
 }: TablePropsType) {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("rut");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>(
+    defaultOrderKey ? defaultOrderKey : columns[0].id
+  );
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -85,14 +90,14 @@ export default function EnhancedTable({
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-  
+
   const visibleRows = React.useMemo(
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, rows, page, rowsPerPage]
   );
 
   return (
@@ -104,9 +109,11 @@ export default function EnhancedTable({
           aria-labelledby="tableTitle"
           size="medium"
           stickyHeader
+          width="1200px"
         >
           <TableHeader
             withCheckboxAll={withCheckbox}
+            withStatusSwitch={withSwitch}
             numSelected={selected.length}
             order={order}
             orderBy={orderBy}
@@ -122,8 +129,10 @@ export default function EnhancedTable({
               return (
                 <TableContentRows
                   withCheckbox={withCheckbox}
+                  withSwitch={withSwitch}
                   key={`row-table-data-${row.rut}`}
                   row={row}
+                  rowOptions={rowOptions}
                   columns={columns}
                   labelId={labelId}
                   // isItemSelected={isItemSelected}

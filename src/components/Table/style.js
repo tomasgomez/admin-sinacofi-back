@@ -7,6 +7,9 @@ export const StyledTabCell = styled(TableCell)`
   min-width: ${(props) => props?.minwidth}px;
   font-size: ${(props) => props?.fontSize}px;
   font-weight: ${(props) => (props?.isBlod ? "bold" : "normal")};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledChip = styled(Chip)`

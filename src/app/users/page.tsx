@@ -4,7 +4,7 @@ import { Alignment, Columns, Data } from "@/components/Table/type";
 import { EditOutlined } from "@mui/icons-material";
 import { IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { mockData } from "./mock-data";
+import { mockData } from "../users/mock-data";
 import Header from "@/components/Table/header";
 
 const columns: Columns[] = [
@@ -149,6 +149,7 @@ const Users = () => {
           }
         ]}
         amountMessages={data.length}
+        withSearchBar
       />
       {!loading && (
         <EnhancedTable rows={data} columns={columns} />

@@ -6,7 +6,6 @@ import Checkbox from "@mui/material/Checkbox";
 import { EnhancedTableProps, Data } from "../type";
 import { StyledTableCellHeader } from "../style";
 import TableSortLabel from "@mui/material/TableSortLabel";
-// import { columnsInbox } from "../constants";
 
 export function TableHeader(props: EnhancedTableProps) {
   const {
@@ -17,7 +16,8 @@ export function TableHeader(props: EnhancedTableProps) {
     rowCount,
     onRequestSort,
     withCheckboxAll,
-    columns = []
+    withStatusSwitch,
+    columns = [],
   } = props;
   const createSortHandler =
     (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -40,6 +40,9 @@ export function TableHeader(props: EnhancedTableProps) {
             />
           </TableCell>
         )}
+        {withStatusSwitch && (
+          <StyledTableCellHeader>Estado</StyledTableCellHeader>
+        )}
         {columns.map((columnsData) => (
           <StyledTableCellHeader
             key={columnsData.id}
@@ -56,7 +59,6 @@ export function TableHeader(props: EnhancedTableProps) {
             </TableSortLabel>
           </StyledTableCellHeader>
         ))}
-        <TableCell />
       </TableRow>
     </TableHead>
   );
