@@ -78,17 +78,17 @@ export const columns: Columns[] = [
 
 export const rowOptions = {
   code: { maxwidth: 110, align: Alignment.LEFT },
-  name: { maxwidth: 200, align: Alignment.LEFT },
+  name: { maxwidth: 180, align: Alignment.LEFT },
   type: { maxwidth: 110, align: Alignment.LEFT },
   institutions: {
-    maxwidth: 150,
+    maxwidth: 120,
     align: Alignment.LEFT,
   },
   distributionAddress: {
-    maxwidth: 175,
+    maxwidth: 150,
     align: Alignment.LEFT,
   },
-  pamsAddress: { maxwidth: 155, align: Alignment.LEFT },
-  FTAddress: { maxwidth: 155, align: Alignment.LEFT },
-  acctions: { maxwidth: 150, align: Alignment.LEFT },
+  pamsAddress: { maxwidth: 150, align: Alignment.LEFT },
+  FTAddress: { maxwidth: 150, align: Alignment.LEFT },
+  acctions: { maxwidth: 120, align: Alignment.LEFT },
 };
