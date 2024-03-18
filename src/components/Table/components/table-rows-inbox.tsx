@@ -1,7 +1,6 @@
 import * as React from "react";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
-import { rowOptions } from "../constants";
 import {
   StyledTabCell,
   StyledChip,
@@ -16,15 +15,16 @@ type CustomCellType = {
   value: any;
   render: any;
   row: any;
+  rowOptions?: any;
 };
 
-const CustomCell = ({ value, render: Component, row }: CustomCellType) => {
+const CustomCell = ({ value, render: Component, row, rowOptions }: CustomCellType) => {
   return (
     <StyledTabCell
       component="th"
       // id={}
       scope="row"
-      {...rowOptions["osn"]}
+      {...rowOptions}
     >
       {/* <Link
         component="button"
@@ -44,6 +44,7 @@ export function TableContentRows(props: TableProps) {
   const {
     handleClick,
     row,
+    rowOptions,
     isItemSelected,
     labelId,
     withCheckbox,
@@ -61,7 +62,7 @@ export function TableContentRows(props: TableProps) {
       >
         {/* /////////////////////// checkbox /////////////////////// */}
         {withCheckbox && (
-          <StyledTabCell padding="checkbox" {...rowOptions["checkbox"]}>
+          <StyledTabCell padding="checkbox" {...rowOptions[row.id]}>
             <Checkbox
               onClick={(event) => handleClick(event, row.id)}
               color="primary"
@@ -72,7 +73,11 @@ export function TableContentRows(props: TableProps) {
             />
           </StyledTabCell>
         )}
-        {withSwitch && <TableSwitch />}
+        {withSwitch && (
+          <StyledTabCell>
+            <TableSwitch onChange={() => console.log("Switch Change")} />
+          </StyledTabCell>
+        )}
         {/* ///////////////////////  Rows /////////////////////// */}
         {columns.map((column: any, idx: number) => (
           <CustomCell
@@ -80,6 +85,7 @@ export function TableContentRows(props: TableProps) {
             value={row[column.id]}
             row={row}
             render={column.render}
+            rowOptions={rowOptions[column.id]}
           />
         ))}
       </TableRow>

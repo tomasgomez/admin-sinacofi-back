@@ -2,10 +2,10 @@ import Switch, { SwitchProps } from "@mui/material/Switch";
 import { styled } from "@mui/material/styles";
 
 const TableSwitch = styled((props: SwitchProps) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props}/>
 ))(({ theme }) => ({
-  width: 42,
-  height: 26,
+  width: 40,
+  height: 24,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
@@ -15,7 +15,7 @@ const TableSwitch = styled((props: SwitchProps) => (
       transform: "translateX(16px)",
       color: "#fff",
       "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#00B2E2",
         opacity: 1,
         border: 0,
       },
@@ -39,8 +39,8 @@ const TableSwitch = styled((props: SwitchProps) => (
   },
   "& .MuiSwitch-thumb": {
     boxSizing: "border-box",
-    width: 22,
-    height: 22,
+    width: 20,
+    height: 20,
   },
   "& .MuiSwitch-track": {
     borderRadius: 26 / 2,

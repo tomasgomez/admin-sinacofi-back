@@ -41,7 +41,9 @@ export function TableHeader(props: EnhancedTableProps) {
             />
           </TableCell>
         )}
-        {withStatusSwitch && <TableCell>Estado</TableCell>}
+        {withStatusSwitch && (
+          <StyledTableCellHeader>Estado</StyledTableCellHeader>
+        )}
         {columns.map((columnsData) => (
           <StyledTableCellHeader
             key={columnsData.id}

@@ -43,7 +43,7 @@ export enum Alignment {
   LEFT = "left",
   RIGHT = "right",
   CENTER = "center",
-};
+}
 
 export interface EnhancedTableProps {
   numSelected: number;
@@ -65,6 +65,7 @@ export interface TableProps {
   withSwitch?: boolean;
   labelId: string;
   row: any;
+  rowOptions?: any;
   columns: any;
   isItemSelected?: boolean;
   handleClick: (event: React.MouseEvent<unknown>, id: number) => void;
