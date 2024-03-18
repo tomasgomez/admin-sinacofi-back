@@ -16,6 +16,7 @@ export interface Data {
   institution: string;
   area: string;
   status: number;
+  actions: any;
 }
 
 export type Order = "asc" | "desc";

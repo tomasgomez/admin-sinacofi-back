@@ -30,7 +30,7 @@ const Users = () => {
         gap: "32px",
       }}
     >
-      <Header title="Áreas" label="Institución" addLabelButton="Agregar Area" />
+      <Header title="Áreas" label="Institución" addLabelButton="Agregar Área" />
       {!loading && (
         <EnhancedTable
           withSwitch

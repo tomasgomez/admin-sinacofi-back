@@ -8,6 +8,7 @@ export const mockData: Data[] = [
     institution: "0020 - Banco Itaú",
     area: "05",
     status: 3,
+    actions: "test1",
   },
   {
     rut: "40.027.012-12",
@@ -16,6 +17,7 @@ export const mockData: Data[] = [
     institution: "0020 - Banco Itaú",
     area: "05",
     status: 1,
+    actions: "test2",
   },
   {
     rut: "23.482.223-1",
@@ -24,6 +26,7 @@ export const mockData: Data[] = [
     institution: "string",
     area: "05",
     status: 3,
+    actions: "test3",
   },
   {
     rut: "34.482.232-5",
@@ -32,6 +35,7 @@ export const mockData: Data[] = [
     institution: "0020 - Banco Itaú",
     area: "05",
     status: 3,
+    actions: "test4",
   },
   {
     rut: "21.234.223-4",
@@ -40,6 +44,7 @@ export const mockData: Data[] = [
     institution: "0032 - HSBC",
     area: "05",
     status: 3,
+    actions: "test5",
   },
   {
     rut: "26.432.223-3",
@@ -48,6 +53,7 @@ export const mockData: Data[] = [
     institution: "0017 - Falabella",
     area: "05",
     status: 3,
+    actions: "test6",
   },
   {
     rut: "12.537.223-5",
@@ -56,6 +62,7 @@ export const mockData: Data[] = [
     institution: "0022 - JP Morgan",
     area: "05",
     status: 3,
+    actions: "test7",
   },
   {
     rut: "27.632.223-4",
@@ -64,5 +71,6 @@ export const mockData: Data[] = [
     institution: "0022 - JP Morgan",
     area: "05",
     status: 3,
+    actions: "test8",
   },
 ];

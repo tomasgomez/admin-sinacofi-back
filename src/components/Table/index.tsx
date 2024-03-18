@@ -11,7 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import { StyledTabCell } from "./style";
 import { Data, Order } from "./type";
 import { getComparator, stableSort } from "./utils";
-import { rowOptions } from "./constants";
 
 type TablePropsType = {
   withCheckbox?: boolean;

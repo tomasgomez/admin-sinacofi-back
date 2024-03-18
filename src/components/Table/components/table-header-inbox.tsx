@@ -6,7 +6,6 @@ import Checkbox from "@mui/material/Checkbox";
 import { EnhancedTableProps, Data } from "../type";
 import { StyledTableCellHeader } from "../style";
 import TableSortLabel from "@mui/material/TableSortLabel";
-// import { columnsInbox } from "../constants";
 
 export function TableHeader(props: EnhancedTableProps) {
   const {
