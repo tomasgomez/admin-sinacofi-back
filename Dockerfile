@@ -34,7 +34,7 @@ COPY --from=builder /usr/src/app/prisma ./prisma
 COPY --from=builder /usr/src/app/assets ./assets
 COPY --from=builder /usr/src/app/.env ./.env
 COPY --from=builder /usr/src/app/src ./src
-COPY --from=builder /usr/src/app/public ./public
+# COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/tsconfig.json ./tsconfig.json
 
 # Your app binds to port 3000 so you'll use the EXPOSE instruction to have it mapped by the docker daemon
