@@ -9,12 +9,9 @@ import TableContentRows from "./components/table-rows-inbox";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import { StyledTabCell } from "./style";
-// import { rows } from "../../messages/inbox/mock";
 import { Data, Order } from "./type";
 import { getComparator, stableSort } from "./utils";
 import { rowOptions } from "./constants";
-
-// const rows: Data[] = [];
 
 type TablePropsType = {
   withCheckbox?: boolean;
@@ -101,7 +98,7 @@ export default function EnhancedTable({
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, rows, page, rowsPerPage]
   );
 
   return (

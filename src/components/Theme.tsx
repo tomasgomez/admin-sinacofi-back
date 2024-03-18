@@ -26,12 +26,10 @@ declare module '@mui/material/styles' {
 
 export const theme = createTheme({
   typography: {
-    a: {
-      fontFamily: "Roboto",
-    },
-    b: {
-      fontFamily: "'Montserrat', sans-serif",
-    }
+    // a: {
+    //   fontFamily: "Roboto",
+    // },
+    fontFamily: "'Montserrat', sans-serif",
   },
   palette: {
     primary: {

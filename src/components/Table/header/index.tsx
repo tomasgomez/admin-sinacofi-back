@@ -101,6 +101,7 @@ export default function Header(props: {
           {filters &&
             filters.map((filter: any) => (
               <Dropdrown
+                key={`dropdown-${filter.label}`} 
                 label={filter.label}
                 options={filter.list}
                 widthDropdown={filter.width}
