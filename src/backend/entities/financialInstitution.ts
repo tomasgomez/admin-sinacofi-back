@@ -3,6 +3,7 @@ export class FinanciaInstitution {
     fullName: string; // Complete name of the financial institution (e.g. Banco Santander)
     rut: string; // RUT of the financial institution (e.g. 97.036.000-K)
     name : string; // Name abbreviation of the financial institution (e.g. Santander)
+    areaCode: string; // Area code of the financial institution (e.g. 037)
 
 
     /*  
@@ -42,5 +43,6 @@ export class FinanciaInstitution {
         this.name = '';
         this.fullName = '';
         this.rut = '';
+        this.areaCode = '';
     }
 }

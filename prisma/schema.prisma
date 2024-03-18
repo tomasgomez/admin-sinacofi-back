@@ -14,7 +14,7 @@ model User {
   publicName                    String
   userGroup                     String
   userProfile                   String
-  areaCode                           String
+  areaCode                        String
   location                       String
   region                         String
   comunne                        String
@@ -27,4 +27,25 @@ model User {
   signatureLevel                String?
   passwordElectronicSignature  String?
   dniElectronicSignature       String?
+}
+
+model Area {
+  id               String    @id @default(auto()) // Area code id (e.g. 037)
+  name             String    // Name of the area (e.g. IT)
+  description      String    // Description of the area (e.g. Information Technology)
+  distributionPath String?   // Distribution 
+  pathPams         String?   // Path of the PAMs
+  pathSams         String?   // Path of the SAMs
+  ftiiCode         String?   // FTII code
+  conectivityType  String?   // Connectivity type (TIP_BROW, TIP_FSVR, TIP_FTRA)
+  institutions     Institution[] // Establishing a many-to-many relationship
+}
+
+model Institution {
+  id         String    @id @default(auto()) // Financial institution code id (e.g. 037)
+  fullName   String    // Complete name of the financial institution (e.g. Banco Santander)
+  rut        String    // RUT of the financial institution (e.g. 97.036.000-K)
+  name       String    // Name abbreviation of the financial institution (e.g. Santander)
+  areaCode   String    // Area code of the financial institution (e.g. 037)
+  areas      Area[]    // Establishing a many-to-many relationship
 }
