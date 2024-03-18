@@ -22,7 +22,7 @@ export interface Data {
 export type Order = "asc" | "desc";
 
 export interface Columns {
-  id: string;
+  id: keyof Data;
   label: string;
   align: Alignment;
   render?: any;
