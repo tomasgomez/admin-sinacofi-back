@@ -22,7 +22,4 @@ services:
       - ${LOG_PATH:-./logs/}:/var/log
     depends_on:
       - postgres
-    environment:
-      DATABASE_URL: postgres://sinacofi:sinacofi123@postgres:5432/sinacofi_database
-      NODE_ENV: production
     command: ["npm", "start"]

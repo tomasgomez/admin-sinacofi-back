@@ -1,16 +1,14 @@
 // prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://sinacofi:hola123@34.135.68.241:5432/sinacofi-mvp"
 }
 model User {
-  id                             Int       @id @default(autoincrement())
-  dni                            String
+  dni                            String     @id
   password                       String
   password_expiration_date       String
   public_name                    String
