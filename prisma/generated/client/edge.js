@@ -21,7 +21,7 @@ const {
   warnOnce,
   defineDmmfProperty,
   Public,
-  detectRuntime,
+  getRuntime
 } = require('./runtime/edge.js')
 
 
@@ -31,11 +31,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.10.2
+ * Prisma Client JS version: 5.11.0
  * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
  */
 Prisma.prismaVersion = {
-  client: "5.10.2",
+  client: "5.11.0",
   engine: "efd2449663b3d73d637ea1fd226bafbcf45b3102"
 }
 
@@ -158,23 +158,23 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.10.2",
+  "clientVersion": "5.11.0",
   "engineVersion": "efd2449663b3d73d637ea1fd226bafbcf45b3102",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "fromEnvVar": null,
+        "value": "postgresql://sinacofi:hola123@34.135.68.241:5432/sinacofi-mvp"
       }
     }
   },
-  "inlineSchema": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\nmodel User {\n  id                             Int       @id @default(autoincrement())\n  dni                            String\n  password                       String\n  password_expiration_date       String\n  public_name                    String\n  user_group                     String\n  user_profile                   String\n  area                           String\n  location                       String\n  region                         String\n  comunne                        String\n  status                         String\n\n  user_message_level             String?\n  signature_class                String?\n  signature_level                String?\n  password_electronic_signature  String?\n  dni_electronic_signature       String?\n}",
-  "inlineSchemaHash": "960a51bf7d4571f18318bdbe091e012d41289f04fba118d7d4a49523b3bf102a",
+  "inlineSchema": "// prisma/schema.prisma\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = \"postgresql://sinacofi:hola123@34.135.68.241:5432/sinacofi-mvp\"\n}\nmodel User {\n  id                             Int       @id @default(autoincrement())\n  dni                            String\n  password                       String\n  password_expiration_date       String\n  public_name                    String\n  user_group                     String\n  user_profile                   String\n  area                           String\n  location                       String\n  region                         String\n  comunne                        String\n  status                         String\n\n  user_message_level             String?\n  signature_class                String?\n  signature_level                String?\n  password_electronic_signature  String?\n  dni_electronic_signature       String?\n}",
+  "inlineSchemaHash": "6e67a8a9ee685bea49df2adf79e2afb18671078b63674dd9ad0d5ac31b4f6c89",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -184,9 +184,7 @@ defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 
 config.injectableEdgeEnv = () => ({
-  parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
-  }
+  parsed: {}
 })
 
 if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {

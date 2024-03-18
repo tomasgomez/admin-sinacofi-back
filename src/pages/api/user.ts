@@ -17,8 +17,13 @@ import {
 
 import {
   validateUserId,
-  validateUser
+  validateUserEdition
 } from '../../backend/entities/dataCleaning/user';
+
+import {
+  Methods
+} from '../../backend/entities/http';
+
 import {
   User
 } from '../../backend/entities/user';
@@ -27,11 +32,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
   const method = req.method;
 
   switch (method) {
-    case 'GET':
+    case Methods.GET:
       try {
         console.log('Fetching user...');
 
-        /* Validate the request body and create a User object */
+        /* Validate the query params and get the userId */
         var userId = validateUserId(req.query);
 
         /* Use the PrismaUserAdapter to get the user from the database */
@@ -51,12 +56,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         res.status(500).json(new Error('Internal server error'));
       }
       break;
-    case 'POST':
+    case Methods.PUT:
       try {
-        console.log('Creating user...');
+        console.log('Editting user...');
+
+        var userId = validateUserId(req.query);
 
         /* Validate the request body and create a User object */
-        var checkedUser = validateUser(req.body);
+        var checkedUser = validateUserEdition(userId, req.body);
 
         if (checkedUser instanceof Error) {
           res.status(400).json(checkedUser);
@@ -74,15 +81,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         res.status(500).json(new Error('Internal server error'));
       }
       break;
-    case 'PUT':
+    case Methods.POST:
       res.status(405).end('Method Not Allowed');
       break;
-    case 'DELETE':
+    case Methods.DELETE:
       res.status(405).end('Method Not Allowed');
       break;
 
     default:
-      res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
