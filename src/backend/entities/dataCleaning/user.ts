@@ -33,7 +33,7 @@ export function validateUserEdition(id: string, data: any): User {
   }
 
 
-  user.id = id;
+  user.dni = id;
 
   return user;
 }

@@ -10,19 +10,21 @@ datasource db {
 model User {
   dni                            String     @id
   password                       String
-  password_expiration_date       String
-  public_name                    String
-  user_group                     String
-  user_profile                   String
-  area                           String
+  passwordExpirationDate       String
+  publicName                    String
+  userGroup                     String
+  userProfile                   String
+  areaCode                           String
   location                       String
   region                         String
   comunne                        String
   status                         String
+  institutionCode               String
 
-  user_message_level             String?
-  signature_class                String?
-  signature_level                String?
-  password_electronic_signature  String?
-  dni_electronic_signature       String?
+  email                         String?
+  userMessageLevel             String?
+  signatureClass                String?
+  signatureLevel                String?
+  passwordElectronicSignature  String?
+  dniElectronicSignature       String?
 }

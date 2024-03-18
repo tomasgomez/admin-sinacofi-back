@@ -18,7 +18,7 @@ export class PrismaUserAdapter implements UserRepository {
 
       const prisma = new PrismaClientWrapper();
 
-      const prismaClient = await prisma.getClient();
+      const prismaClient = prisma.getClient();
 
       /* Find a user by their ID */
       const user = await prismaClient.user.findUnique({
@@ -26,6 +26,10 @@ export class PrismaUserAdapter implements UserRepository {
           dni: id
         }
       });
+
+      if (user === null) {
+        throw new Error('User not found');
+      }
 
       return user;
     } catch (error: any) {
@@ -39,7 +43,7 @@ export class PrismaUserAdapter implements UserRepository {
     try {
       console.log('Creating user...');
 
-      const prisma = await new PrismaClientWrapper().getClient();
+      const prisma = new PrismaClientWrapper().getClient();
 
       /* Create a new user */
       const newUser = await prisma.user.create({
@@ -58,12 +62,12 @@ export class PrismaUserAdapter implements UserRepository {
     try {
       console.log('Updating user...');
 
-      const prisma = await new PrismaClientWrapper().getClient();
+      const prisma = new PrismaClientWrapper().getClient();
 
       /* Update the user */
       const updatedUser = await prisma.user.update({
         where: {
-          id: user.id
+          dni: user.dni
         },
         data: user
       });

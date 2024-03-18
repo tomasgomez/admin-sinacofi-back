@@ -8,16 +8,17 @@ export class PrismaClientWrapper {
   }
 
   async connect(): Promise<void> {
+    
   }
 
   async disconnect(): Promise<void> {
+    this.client.$disconnect
   }
 
   async checkConnection(): Promise<void>{
   }
 
-  async getClient(): PrismaClient {
-
+  getClient(): PrismaClient {
         return this.client;
     }
 }

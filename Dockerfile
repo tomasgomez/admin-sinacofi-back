@@ -18,7 +18,8 @@ RUN npx prisma generate
 COPY . .
 
 # Build your Next.js app using the environment variables from the file
-RUN source .env && npm run build
+RUN source .env 
+RUN npm run build
 
 # Step 2: Serve the Next.js application
 FROM node:20-alpine AS runner
