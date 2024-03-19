@@ -167,7 +167,7 @@ const Users = () => {
       {!loading && (
         <EnhancedTable rows={data} columns={columns} />
       )}
-      <EditUserModal data={modalState.data} open={modalState.open} onClose={onCloseModal} />
+      {modalState.open && <EditUserModal data={modalState.data} open={modalState.open} onClose={onCloseModal} />}
     </div>
   )
 }

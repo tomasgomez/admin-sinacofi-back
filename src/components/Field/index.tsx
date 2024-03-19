@@ -19,9 +19,13 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-export default function Field(props: { value?: any, label: string, width: number, options?: any } & TextFieldProps) {
+export default function Field(props: { value?: any, label: string, width: number, options?: any, onChange?: any } & TextFieldProps) {
   const { width, label, value, onChange } = props;
   const [isFocused, setIsFocused] = React.useState(false);
+
+  const handleChange = React.useCallback((evt: any) => {
+    onChange && onChange(evt.target?.value, evt);
+  }, [onChange])
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -44,7 +48,7 @@ export default function Field(props: { value?: any, label: string, width: number
       onBlur={handleBlur}
     >
       <FormControl fullWidth>
-        <StyledTextField {...props} label={label} value={value} onChange={onChange} />
+        <StyledTextField {...props} label={label} value={value} onChange={handleChange} />
       </FormControl>
     </Box>
   );
