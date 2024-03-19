@@ -12,28 +12,60 @@ import {
 
 
 export class PrismaUserAdapter implements UserRepository {
-  async findById(id: string): Promise < User | Error > {
+  async find(attributes: User, count: string, offset: string): Promise < User[] | Error > {
     try {
-      console.log('Fetching user...' + id);
+      console.log('Fetching users...');
+
+      let users: User[];
 
       const prisma = new PrismaClientWrapper();
 
       const prismaClient = prisma.getClient();
+ 
+      /* Destructure the attributes from User entity */
+      const {
+        dni,
+        areaCode,
+        institutionCode
+      } = attributes;
 
-      /* Find a user by their ID */
-      const user = await prismaClient.user.findUnique({
-        where: {
-          dni: id
-        }
-      });
+      /* Initialize the where object with the possible attributes to search with */
+      const where: {
+        dni ? : string;
+        areaCode ? : string;
+        institutionCode ? : string;
+      } = {};
 
-      if (user === null) {
-        throw new Error('User not found');
+
+
+      /* If the attributes are present, add them to the where object */
+      if (dni) where.dni = dni;
+      if (areaCode) where.areaCode = areaCode;
+      if (institutionCode) where.institutionCode = institutionCode;
+
+      /* If count is not present then find all users */
+      if (count === '0' || count === '') {
+        /* Fetch users based on the constructed where object */
+        users = await prismaClient.user.findMany({
+          where
+        });
+      } else {
+        users = await prismaClient.user.findMany({
+          where,
+          take: parseInt(count),
+          skip: parseInt(offset)
+        });
+      }
+      
+
+      /* If the user is not found, return an error */
+      if (users.length === 0) {
+        return new Error('User not found');
       }
 
-      return user;
-    } catch (error: any) {
+      return users;
 
+    } catch (error: any) {
       console.error('Error fetching user:', error);
       return error;
     }

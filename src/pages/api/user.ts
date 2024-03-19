@@ -1,6 +1,6 @@
 import {
   getUserUseCase
-  
+
 } from '@/backend/usecases/user/get';
 
 import {
@@ -10,7 +10,8 @@ import {
 
 import {
   validateUserId,
-  validateUserEdition
+  validateUserEdition,
+  validateGetUser
 } from '../../backend/entities/dataCleaning/user';
 
 import {
@@ -20,9 +21,11 @@ import {
 import {
   User
 } from '../../backend/entities/user';
-import { updateUserUseCase } from '@/backend/usecases/user/update';
+import {
+  updateUserUseCase
+} from '@/backend/usecases/user/update';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse < User | Error > ) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse < User[] | Error > ) {
   const method = req.method;
 
   switch (method) {
@@ -31,68 +34,89 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         console.log('Fetching user...');
 
         /* Validate the query params and get the userId */
-        var userId = validateUserId(req.query);
+        let result = validateGetUser(req.query);
 
-        if (userId instanceof Error) {
-          res.status(400).json(userId);
+        if (result instanceof Error) {
+          res.status(400).json(result);
           return;
         }
 
+        let [user, count, offset] = result;
+
         /* Use the PrismaUserAdapter to get the user from the database */
-        var user = await getUserUseCase.execute(userId)
+        let users = await getUserUseCase.execute(user, count, offset)
 
         /* If the user is not found, return a 404 error */
-        if (!user) {
+        if (!users) {
           res.status(404).json(new Error('User not found'));
           return;
         }
 
         /* Return the user */
-        res.status(200).json(user);
+        res.status(200).json(users);
+        return;
 
       } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).json(new Error('Internal server error'));
+        return;
       }
-      break;
-    case Methods.PUT:
-      try {
-        console.log('Editting user...');
+      case Methods.PUT:
+        try {
+          console.log('Editting user...');
 
-        var userId = validateUserId(req.query);
+          let userId = validateUserId(req.query);
 
-        if (userId instanceof Error) {
-          res.status(400).json(userId);
+          if (userId instanceof Error) {
+            res.status(400).json(userId);
+            return;
+          }
+
+          /* Validate the request body and create a User object */
+          let checkedUser = validateUserEdition(userId, req.body);
+
+          if (checkedUser instanceof Error) {
+            res.status(400).json(checkedUser);
+            return;
+          }
+
+          /* Use the PrismaUserAdapter to create the user in the database */
+          let newUser = await updateUserUseCase.execute(userId, checkedUser);
+
+          if (newUser instanceof Error) {
+            res.status(400).json(newUser);
+            return;
+          }
+
+          if (!newUser) {
+            res.status(404).json(new Error('User not found'));
+            return;
+          }
+
+          let users: User[] = []
+
+          if (newUser instanceof User) {
+            users.push(newUser);
+            res.status(200).json(users);
+            return;
+          }
+
+          res.status(500).json(new Error('Internal server error'));
+          return;
+
+        } catch (error) {
+          console.error('Error creating user:', error);
+          res.status(500).json(new Error('Internal server error'));
           return;
         }
+        case Methods.POST:
+          res.status(405).end('Method Not Allowed');
+          break;
+        case Methods.DELETE:
+          res.status(405).end('Method Not Allowed');
+          break;
 
-        /* Validate the request body and create a User object */
-        var checkedUser = validateUserEdition(userId, req.body);
-
-        if (checkedUser instanceof Error) {
-          res.status(400).json(checkedUser);
-          return;
-        }
-
-        /* Use the PrismaUserAdapter to create the user in the database */
-        var newUser = await updateUserUseCase.execute(userId, checkedUser);
-
-        /* Return the new user */
-        res.status(201).json(newUser);
-
-      } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).json(new Error('Internal server error'));
-      }
-      break;
-    case Methods.POST:
-      res.status(405).end('Method Not Allowed');
-      break;
-    case Methods.DELETE:
-      res.status(405).end('Method Not Allowed');
-      break;
-
-    default:
-      res.status(405).end(`Method ${method} Not Allowed`);
+        default:
+          res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

@@ -18,8 +18,12 @@ export class UpdateUser {
 
     async execute(userId: string, user: User): Promise < User | Error > {
         try {
+            let userGet = new User();
+
+            userGet.dni = userId;
+
             /* Find the user by their ID */
-            var foundUser = await this.repository.findById(userId);
+            var foundUser = await this.repository.find(userGet, '0', '0');
 
             if (foundUser instanceof Error) {
                 return foundUser;

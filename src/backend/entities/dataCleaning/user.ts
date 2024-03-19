@@ -50,3 +50,43 @@ export function validateUserId(data: any): string | Error {
 
   return id;
 }
+
+
+/* Validate the query params and get the userId */
+export function validateGetUser(data: any): [User, string, string] | Error {
+  let user: User = new User();
+
+  const {
+      id,
+      institutionCode,
+      areaCode,
+      count,
+      offset
+  } = data;
+
+  let countResponse: string = '0';
+  let offsetResponse: string = '0';
+
+  // Validating required attributes
+  if (id && typeof id === 'string' && id.trim() === '') {
+    user.dni = id;
+  }
+
+  if (institutionCode && typeof institutionCode === 'string' && institutionCode.trim() !== '') {
+      user.institutionCode = institutionCode;
+  }
+
+  if (areaCode && typeof areaCode === 'string' && areaCode.trim() !== '') {
+      user.areaCode = areaCode;
+  }
+
+  if (count && typeof count === 'string' && count.trim() !== '') {
+      countResponse = count;
+  }
+
+  if (offset && typeof offset === 'string' && offset.trim() !== '') {
+      offsetResponse = offset;
+  }
+
+  return [user, countResponse, offsetResponse];
+}

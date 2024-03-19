@@ -6,13 +6,12 @@ import { User } from '../../entities/user';
 export class GetUser {
     constructor(private readonly userRepository: UserRepository) {} 
   
-    async execute(userId: string): Promise<User | Error> {
+    async execute(attributes: User, count:string, offset:string ): Promise<User[] | Error> {
       try {
-        const user = await this.userRepository.findById(userId);
+        const user = await this.userRepository.find(attributes, count, offset);
 
         return user;
       } catch (error:any) {
-        // Handle errors appropriately
         console.error('Error fetching user:', error);
         return error;
       }
