@@ -11,54 +11,54 @@ import EditUserModal from "./EditUserModal";
 const institutionList = [
   {
     label: "Todas",
-    id: "05",
+    value: "all",
   },
   {
     label: "039 - Banco Itaú",
-    id: "039",
+    value: "039",
   },
   {
     label: "031 - HSBC",
-    id: "031",
+    value: "031",
   },
   {
     label: "016 - BCI",
-    id: "016",
+    value: "016",
   },
   {
     label: "041 - JP Morgan",
-    id: "041",
+    value: "041",
   },
   {
     label: "049 - Security",
-    id: "049",
+    value: "049",
   },
 ];
 
 const areaList = [
   {
     label: "Todas",
-    id: "05",
+    value: "all",
   },
   {
     label: "05 - Operación TID ",
-    id: "05",
+    value: "05",
   },
   {
     label: "10 - TESORERIA INTEGRAL",
-    id: "10",
+    value: "10",
   },
   {
     label: "12 - CONTABILIDAD",
-    id: "12",
+    value: "12",
   },
   {
     label: "15 -  PASIVOS",
-    id: "15",
+    value: "15",
   },
   {
     label: "20 - TARJETAS BANCARIAS",
-    id: "20",
+    value: "20",
   },
 ];
 
@@ -153,11 +153,13 @@ const Users = () => {
             label: "Institutición",
             list: institutionList,
             width: "206px",
+            defaultValue: "all"
           },
           {
             label: "Area",
             list: areaList,
             width: "197px",
+            defaultValue: "all"
           }
         ]}
         withSearchBar

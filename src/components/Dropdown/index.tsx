@@ -1,18 +1,31 @@
-"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent, SelectProps } from "@mui/material/Select";
-// import { options } from "./constants";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export default function Dropdrown(props: { label: string, options: any, width: string | number } & SelectProps) {
-  const { width, label, options = [] } = props;
-  const [optionSelected, setOptionSelected] = React.useState(options[0]?.value);
+export default function Dropdrown(props: {
+  label: string;
+  width: number;
+  options: any;
+  defaultValue?: any
+  selected?: any;
+}) {
+  const { width, label, options, defaultValue, selected } = props;
+  const [optionSelected, setOptionSelected] = React.useState(selected || defaultValue);
+  const [isFocused, setIsFocused] = React.useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setOptionSelected(event.target.value as string);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
   };
 
   return (
@@ -20,9 +33,12 @@ export default function Dropdrown(props: { label: string, options: any, width: s
       <FormControl fullWidth>
         <InputLabel
           id="simple-select-label"
-          style={{ backgroundColor: "#DFF8FF" }}
+          style={{
+            backgroundColor:
+              isFocused || !!optionSelected ? "#DFF8FF" : "transparent",
+          }}
         >
-          {label}:
+          {label}
         </InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -30,6 +46,8 @@ export default function Dropdrown(props: { label: string, options: any, width: s
           value={optionSelected}
           label={label}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           {options.map((option: any, index: number) => (
             <MenuItem key={`${option.label}-${index}`} value={option.value}>
@@ -41,3 +59,8 @@ export default function Dropdrown(props: { label: string, options: any, width: s
     </Box>
   );
 }
+
+
+
+
+

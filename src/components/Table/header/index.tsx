@@ -105,8 +105,8 @@ export default function Header(props: {
                 label={filter.label}
                 options={filter.list}
                 width={filter.width}
+                defaultValue={filter.defaultValue}
               />
-              // <Dropdrown label={label} widthDropdown={300} />
             ))}
           {addLabelButton && <AddElement label={addLabelButton} />}
         </div>
