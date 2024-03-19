@@ -3,7 +3,7 @@ import {
 } from '../../interfaces/userRepository';
 import {
     PrismaUserAdapter as PrismaAdapter
-} from '../../adapters/prisma/userDatabase';
+} from '../../adapters/prisma/user';
 import {
     User
 } from '../../entities/user';

@@ -1,4 +1,4 @@
-export class FinanciaInstitution {
+export class Institution {
     id: string; // Financial institution code id (e.g. 037)
     fullName: string; // Complete name of the financial institution (e.g. Banco Santander)
     rut: string; // RUT of the financial institution (e.g. 97.036.000-K)

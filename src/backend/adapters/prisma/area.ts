@@ -8,30 +8,56 @@ import {
 
 import {
   PrismaClientWrapper
-} from './prismaWrapper';
+} from './client/prismaWrapper';
 
 
 export class PrismaAreaAdapter implements AreaRepository {
-  async findById(id: string): Promise < Area | Error > {
+  async find(attributes: Area, count: string, offset: string): Promise < Area[] | Error > {
     try {
-      console.log('Fetching area...' + id);
+      console.log('Fetching area...');
+
+      let areas: Area[];
 
       const prisma = new PrismaClientWrapper();
 
       const prismaClient = prisma.getClient();
 
-      /* Find a area by their ID */
-      const area = await prismaClient.area.findUnique({
-        where: {
-          id: id
-        }
-      });
+      /* Desctructure the attributes from Area entity */
+      const {
+        id,
+        institutionCode,
+      } = attributes;
 
-      if (area === null) {
-        throw new Error('Area not found');
+      /* Initialize the where object with the possible attributes to search with */
+      const where: {
+        id ? : string;
+        institutionCode ? : string;
+      } = {};
+
+      /* If the attributes are present, add them to the where object */
+      if (id) where.id = id;
+      if (institutionCode) where.institutionCode = institutionCode;
+
+      /* If count is not present then find all areas */
+      if (count === '0' || count === '') {
+        /* Fetch areas based on the constructed where object */
+        areas = await prismaClient.area.findMany({
+          where
+        });
+      } else {
+        areas = await prismaClient.area.findMany({
+          where,
+          take: parseInt(count),
+          skip: parseInt(offset)
+        });
       }
 
-      return area;
+      /* If the area is not found, return an error */
+      if (areas.length === 0) {
+        return new Error('Area not found');
+      }
+
+      return areas;
     } catch (error: any) {
 
       console.error('Error fetching area:', error);

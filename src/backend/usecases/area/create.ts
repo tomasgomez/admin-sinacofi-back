@@ -1,5 +1,5 @@
 import { AreaRepository } from '../../interfaces/areaRepository';
-import { PrismaAreaAdapter as PrismaAdapter } from '../../adapters/prisma/areaDatabase';
+import { PrismaAreaAdapter as PrismaAdapter } from '../../adapters/prisma/area';
 import { Area } from '../../entities/area';
 
 

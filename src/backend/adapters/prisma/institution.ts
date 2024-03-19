@@ -3,35 +3,62 @@ import {
 } from '../../interfaces/institutionRepository';
 
 import {
-  FinanciaInstitution as Institution
-} from '../../entities/financialInstitution';
+ Institution
+} from '../../entities/institution';
 
 import {
   PrismaClientWrapper
-} from './prismaWrapper';
+} from './client/prismaWrapper';
 
 
 export class PrismaInstitutionAdapter implements InstitutionRepository {
-  async findById(id: string): Promise < Institution | Error > {
+  async find(attributes: Institution, count: string, offset: string): Promise < Institution[] | Error > {
     try {
-      console.log('Fetching institution...' + id);
+      console.log('Fetching institutions...');
+
+      let institutions: Institution[];
 
       const prisma = new PrismaClientWrapper();
 
       const prismaClient = prisma.getClient();
 
-      /* Find a institution by their ID */
-      const institution = await prismaClient.institution.findUnique({
-        where: {
-          id: id
-        }
-      });
+      /* Destructure the attributes from User entity */
+      const {
+        id,
+        areaCode,
+      } = attributes;
 
-      if (institution === null) {
-        throw new Error('Institution not found');
+      /* Initialize the where object with the possible attributes to search with */
+      const where: {
+        id ? : string;
+        areaCode ? : string;
+      } = {};
+
+      /* If the attributes are present, add them to the where object */
+      if (id) where.id = id;
+      if (areaCode) where.areaCode = areaCode;
+
+      /* If count is not present then find all users */
+      if (count === '0' || count === '') {
+        /* Fetch users based on the constructed where object */
+        institutions = await prismaClient.institution.findMany({
+          where
+        });
+      } else {
+        institutions = await prismaClient.institution.findMany({
+          where,
+          take: parseInt(count),
+          skip: parseInt(offset)
+        });
       }
 
-      return institution;
+      /* If the institution is not found, return an error */
+      if (institutions.length === 0) {
+        return new Error('Institution not found');
+      }
+
+
+      return institutions;
     } catch (error: any) {
 
       console.error('Error fetching institution:', error);
