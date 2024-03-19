@@ -1,12 +1,8 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Input, TextField, TextFieldProps, styled } from "@mui/material";
-// import { options } from "./constants";
+import { TextField, TextFieldProps, styled } from "@mui/material";
 
 const StyledTextField = styled(TextField)({
   '& .MuiInputBase-root.Mui-disabled': {
@@ -17,43 +13,38 @@ const StyledTextField = styled(TextField)({
     backgroundColor: "#DFF8FF",
     color: "#565656 !important",
   },
-  // "> .Mui-disabled": {
-  //   // backgroundColor: "red",
-  // }
+  '& .MuiFormLabel-root': {
+    backgroundColor: "#DFF8FF",
+    color: "#565656 !important",
+  },
 });
 
 export default function Field(props: { value?: any, label: string, width: number, options?: any } & TextFieldProps) {
-  const { width, label, options, value } = props;
-  // const [optionSelected, setOptionSelected] = React.useState(options[0]?.value);
+  const { width, label, value, onChange } = props;
+  const [isFocused, setIsFocused] = React.useState(false);
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setOptionSelected(event.target.value as string);
-  // };
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   return (
-    <Box sx={{ width, color: "#000000" }}>
+    <Box
+      sx={{
+        width,
+        color: "#000000",
+        "& #outlined-basic-label": {
+          backgroundColor: isFocused || value ? "#DFF8FF" : "transparent",
+        },
+      }}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       <FormControl fullWidth>
-        {/* <InputLabel
-          id="simple-select-label"
-          style={{ backgroundColor: "#DFF8FF" }}
-        >
-          {label}:
-        </InputLabel> */}
-        {/* <TextField value={} /> */}
-        <StyledTextField {...props} label={label} value={value} />
-        {/* <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={optionSelected}
-          label={label}
-          onChange={handleChange}
-        >
-          {options.map((option: any, index: number) => (
-            <MenuItem key={`${option.label}-${index}`} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select> */}
+        <StyledTextField {...props} label={label} value={value} onChange={onChange} />
       </FormControl>
     </Box>
   );
