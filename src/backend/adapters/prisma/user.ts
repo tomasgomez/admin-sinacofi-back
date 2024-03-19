@@ -8,7 +8,7 @@ import {
 
 import {
   PrismaClientWrapper
-} from './prismaWrapper';
+} from './client/prismaWrapper';
 
 
 export class PrismaUserAdapter implements UserRepository {

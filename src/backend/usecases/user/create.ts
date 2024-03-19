@@ -1,5 +1,5 @@
 import { UserRepository } from '../../interfaces/userRepository';
-import { PrismaUserAdapter as PrismaAdapter } from '../../adapters/prisma/userDatabase';
+import { PrismaUserAdapter as PrismaAdapter } from '../../adapters/prisma/user';
 import { User } from '../../entities/user';
 
 

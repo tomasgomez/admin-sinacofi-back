@@ -64,11 +64,18 @@ export function validateGetUser(data: any): [User, string, string] | Error {
       offset
   } = data;
 
+  console.log('id:', id);
+  console.log(typeof id);
+  console.log('institutionCode:', institutionCode);
+  console.log('areaCode:', areaCode);
+  console.log('count:', count);
+  console.log('offset:', offset);
+
   let countResponse: string = '0';
   let offsetResponse: string = '0';
 
   // Validating required attributes
-  if (id && typeof id === 'string' && id.trim() === '') {
+  if (typeof id === 'string' && id.trim() !== '') {
     user.dni = id;
   }
 

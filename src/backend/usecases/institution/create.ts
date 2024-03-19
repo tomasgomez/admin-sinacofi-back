@@ -1,6 +1,6 @@
 import { InstitutionRepository } from '../../interfaces/institutionRepository';
-import { PrismaInstitutionAdapter as PrismaAdapter } from '../../adapters/prisma/institutionDatabase';
-import { FinanciaInstitution as Institution } from '../../entities/financialInstitution';
+import { PrismaInstitutionAdapter as PrismaAdapter } from '../../adapters/prisma/institution';
+import { Institution } from '../../entities/institution';
 
 
 export class CreateInstitution {

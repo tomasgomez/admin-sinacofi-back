@@ -3,10 +3,10 @@ import {
 } from '../../interfaces/institutionRepository';
 import {
     PrismaInstitutionAdapter as PrismaAdapter
-} from '../../adapters/prisma/institutionDatabase';
+} from '../../adapters/prisma/institution';
 import {
-    FinanciaInstitution as Institution
-} from '../../entities/financialInstitution';
+    Institution
+} from '../../entities/institution';
 
 
 export class UpdateInstitution {
@@ -18,8 +18,12 @@ export class UpdateInstitution {
 
     async execute(institutionId: string, institution: Institution): Promise < Institution | Error > {
         try {
+            let institutionGet = new Institution();
+
+            institutionGet.id = institutionId;
+
             /* Find the Institution by their ID */
-            var foundInstitution = await this.repository.findById(institutionId);
+            var foundInstitution = await this.repository.find(institutionGet, '0', '0');
 
             if (foundInstitution instanceof Error) {
                 return foundInstitution;

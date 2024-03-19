@@ -1,23 +1,28 @@
-import { InstitutionRepository } from '../../interfaces/institutionRepository';
-import { PrismaInstitutionAdapter as PrismaAdapter } from '../../adapters/prisma/institutionDatabase';
-import { FinanciaInstitution as Institution } from '../../entities/financialInstitution';
+import {
+  InstitutionRepository
+} from '../../interfaces/institutionRepository';
+import {
+  PrismaInstitutionAdapter as PrismaAdapter
+} from '../../adapters/prisma/institution';
+import { Institution
+} from '../../entities/institution';
 
 
 export class GetInstitution {
-    constructor(private readonly institutionRepository: InstitutionRepository) {} 
-  
-    async execute(institutionId: string): Promise<Institution | Error> {
-      try {
-        const institution = await this.institutionRepository.findById(institutionId);
+  constructor(private readonly institutionRepository: InstitutionRepository) {}
 
-        return institution;
-      } catch (error:any) {
-        // Handle errors appropriately
-        console.error('Error fetching institution:', error);
-        return error;
-      }
+  async execute(attributes: Institution, count: string, offset: string): Promise < Institution[] | Error > {
+    try {
+      const institutions = await this.institutionRepository.find(attributes, count, offset);
+
+      return institutions;
+    } catch (error: any) {
+      // Handle errors appropriately
+      console.error('Error fetching institution:', error);
+      return error;
     }
   }
+}
 
 
 const institutionRepository: InstitutionRepository = new PrismaAdapter();
