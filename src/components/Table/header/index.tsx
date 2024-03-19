@@ -104,7 +104,7 @@ export default function Header(props: {
                 key={`dropdown-${filter.label}`} 
                 label={filter.label}
                 options={filter.list}
-                widthDropdown={filter.width}
+                width={filter.width}
               />
               // <Dropdrown label={label} widthDropdown={300} />
             ))}

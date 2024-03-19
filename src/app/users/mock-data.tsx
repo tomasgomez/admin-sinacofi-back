@@ -4,6 +4,9 @@ export const mockData: Data[] = [
   {
     rut: "40.027.012-12",
     publicName: "Juan Rodriguez",
+    email: "Juan.Rodriguez@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "03 - Tratador de Mensajes",
     institution: "0020 - Banco Itaú",
     area: "05",
@@ -13,6 +16,9 @@ export const mockData: Data[] = [
   {
     rut: "40.027.012-12",
     publicName: "Roberto Diaz",
+    email: "Roberto.Diaz@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "05 - Administrador Instituciones, 03 - Tratador de Mensajes",
     institution: "0020 - Banco Itaú",
     area: "05",
@@ -22,6 +28,9 @@ export const mockData: Data[] = [
   {
     rut: "23.482.223-1",
     publicName: "Federico Jimenez",
+    email: "Federico.Jimenez@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "05 - Administrador Instituciones",
     institution: "string",
     area: "05",
@@ -31,6 +40,9 @@ export const mockData: Data[] = [
   {
     rut: "34.482.232-5",
     publicName: "Felipe Cardenas",
+    email: "Felipe.Cardenas@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "05 - Administrador Instituciones",
     institution: "0020 - Banco Itaú",
     area: "05",
@@ -40,6 +52,9 @@ export const mockData: Data[] = [
   {
     rut: "21.234.223-4",
     publicName: "Julia Perez",
+    email: "Julia.Perez@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "07 - Todas RIH",
     institution: "0032 - HSBC",
     area: "05",
@@ -49,6 +64,9 @@ export const mockData: Data[] = [
   {
     rut: "26.432.223-3",
     publicName: "Laura Lopez",
+    email: "Laura.Lopez@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "03 - Tratador de Mensajes",
     institution: "0017 - Falabella",
     area: "05",
@@ -57,7 +75,10 @@ export const mockData: Data[] = [
   },
   {
     rut: "12.537.223-5",
-    publicName: "Laura Lopez",
+    publicName: "Ramiro Montaner",
+    email: "Ramiro.Montaner@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "03 - Tratador de Mensajes",
     institution: "0022 - JP Morgan",
     area: "05",
@@ -66,7 +87,10 @@ export const mockData: Data[] = [
   },
   {
     rut: "27.632.223-4",
-    publicName: "Laura Lopez",
+    publicName: "Monica Smith",
+    email: "Monica.Smith@sinacofi.com",
+    password: "123456789",
+    validity: "Indefinido",
     group: "03 - Tratador de Mensajes",
     institution: "0022 - JP Morgan",
     area: "05",

@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select, { SelectChangeEvent, SelectProps } from "@mui/material/Select";
 // import { options } from "./constants";
 
-export default function Dropdrown(props: { label: string, widthDropdown: number, options: any }) {
-  const { widthDropdown, label, options } = props;
+export default function Dropdrown(props: { label: string, options: any, width: string | number } & SelectProps) {
+  const { width, label, options = [] } = props;
   const [optionSelected, setOptionSelected] = React.useState(options[0]?.value);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -16,7 +16,7 @@ export default function Dropdrown(props: { label: string, widthDropdown: number,
   };
 
   return (
-    <Box sx={{ width: widthDropdown }}>
+    <Box sx={{ width }}>
       <FormControl fullWidth>
         <InputLabel
           id="simple-select-label"

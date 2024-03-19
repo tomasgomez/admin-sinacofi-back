@@ -17,6 +17,10 @@ export interface Data {
   area: string;
   status: number;
   actions: any;
+  email: string;
+  password: string;
+  roles?: any;
+  validity: string;
 }
 
 export type Order = "asc" | "desc";
