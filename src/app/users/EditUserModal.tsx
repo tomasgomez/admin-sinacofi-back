@@ -17,7 +17,7 @@ export default function EditUserModal({ open, data: initialValues, onClose }: { 
     <Modal title="Editar Usuarios" maxWidth="700px" open={open} onClose={onClose}>
       <Stack rowGap={"20px"} direction="column" mb="24px">
         <Stack columnGap={"20px"} direction="row" justifyContent="space-between">
-          <Field label="RUT Usuario" disabled width={130} value={currentState?.rut} />
+          <Field label="RUT Usuario" disabled width={130} value={currentState?.dni} />
           <Field label="Nombre Público" disabled width={222} value={currentState?.publicName} />
           <Field label="Password" type="password" disabled width={222} value={currentState?.password} />
         </Stack>
@@ -55,16 +55,16 @@ export default function EditUserModal({ open, data: initialValues, onClose }: { 
         Localidad
       </Typography>
       <Stack columnGap={"20px"} direction="row" justifyContent="space-between">
-        <Dropdrown label="Localidad" width={195} value={currentState?.rut} options={[]} />
-        <Dropdrown label="Región" width={195} value={currentState?.publicName} options={[]} />
-        <Dropdrown label="Comuna" width={195} value={currentState?.password} options={[]} />
+        <Dropdrown label="Localidad" width={195} value={currentState?.location} options={[]} />
+        <Dropdrown label="Región" width={195} value={currentState?.areaCode} options={[]} />
+        <Dropdrown label="Comuna" width={195} value={currentState?.comunne} options={[]} />
       </Stack>
       <Typography variant="subtitle1" mb="20px" mt="24px">
         Institución y Área
       </Typography>
       <Stack columnGap={"20px"} direction="row" justifyContent="space-between">
-        <Dropdrown label="Institución" width={301} value={currentState?.rut} options={[]} />
-        <Dropdrown label="Area" width={301} value={currentState?.publicName} options={[]} />
+        <Dropdrown label="Institución" width={301} value={currentState?.institutionCode} options={[]} />
+        <Dropdrown label="Area" width={301} value={currentState?.areaCode} options={[]} />
       </Stack>
       <Stack direction="row" justifyContent="space-between" mb="20px" mt="24px" alignItems="center">
         <Typography variant="subtitle1">

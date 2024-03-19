@@ -71,6 +71,17 @@ const Users = () => {
   const [data, setData] = useState<Data[]>([]);
   const [modalState, setModalState] = useState<modalStateType>(initialModalState);
 
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('/api/user');
+      const result = await response.json();
+      setData(result);
+      setLoading(false);
+    }
+    setLoading(true);
+    fetchData();
+  }, []);
+
   const onEditUser = useCallback((row: Data) => {
     setModalState({ open: true, data: row });
   }, []);
@@ -82,7 +93,7 @@ const Users = () => {
   const columns = useMemo(() => {
     const columnList: Columns[] = [
       {
-        id: "rut",
+        id: "dni",
         label: "RUT",
         align: Alignment.CENTER,
       },
@@ -92,17 +103,17 @@ const Users = () => {
         align: Alignment.LEFT,
       },
       {
-        id: "group",
+        id: "userGroup",
         label: "Grupo",
         align: Alignment.LEFT,
       },
       {
-        id: "institution",
+        id: "institutionCode",
         label: "Institucion",
         align: Alignment.LEFT,
       },
       {
-        id: "area",
+        id: "areaCode",
         label: "Area",
         align: Alignment.LEFT,
       },
@@ -126,15 +137,6 @@ const Users = () => {
     ];
     return columnList;
   }, [onEditUser])
-
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setData(mockData);
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div style={{
