@@ -107,4 +107,25 @@ export class PrismaInstitutionAdapter implements InstitutionRepository {
     }
   }
 
+  async delete(institution: Institution): Promise < Institution | Error > {
+    try {
+      console.log('Deleting institution...');
+
+      const prisma = new PrismaClientWrapper().getClient();
+
+      /* Delete the institution */
+      const deletedInstitution = await prisma.institution.delete({
+        where: {
+          id: institution.id
+        }
+      });
+
+      return deletedInstitution;
+    } catch (error: any) {
+
+      console.error('Error deleting institution:', error);
+      return error;
+    }
+  }
+
 }

@@ -106,4 +106,25 @@ export class PrismaAreaAdapter implements AreaRepository {
     }
   }
 
+  async delete(area: Area): Promise < Area | Error > {
+    try {
+      console.log('Deleting area...');
+
+      const prisma = new PrismaClientWrapper().getClient();
+
+      /* Delete the area */
+      const deletedArea = await prisma.area.delete({
+        where: {
+          id: area.id
+        }
+      });
+
+      return deletedArea;
+    } catch (error: any) {
+
+      console.error('Error deleting area:', error);
+      return error;
+    }
+  }
+
 }
