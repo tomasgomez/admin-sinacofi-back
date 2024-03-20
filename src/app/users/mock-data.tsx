@@ -98,3 +98,154 @@ export const mockData: Data[] = [
     actions: "test8",
   },
 ];
+
+export const locationList = [
+  {
+    value: "0320",
+    label: "0320 - SANTIAGO",
+  },
+  {
+    value: "0324",
+    label: "0324 - COLINA",
+  },
+  {
+    value: "0328",
+    label: "0328 - MAIPÚ",
+  },
+  {
+    value: "0330",
+    label: "0330 - ALGARROBO",
+  },
+  {
+    value: "0332",
+    label: "0332 - EL QUISCO",
+  },
+  {
+    value: "0333",
+    label: "0333 - EL TABO",
+  },
+];
+
+export const regionList = [
+  {
+    value: "0320",
+    label: "Región de Arica y Parinacota",
+  },
+  {
+    value: "0324",
+    label: "Región de Tarapacá",
+  },
+  {
+    value: "0328",
+    label: "Región de Antofagasta",
+  },
+  {
+    value: "0330",
+    label: "Región de Atacama",
+  },
+  {
+    value: "0332",
+    label: "Región de Coquimbo",
+  },
+  {
+    value: "0333",
+    label: "Región de Valparaíso",
+  },
+  {
+    value: "0334",
+    label: "Región Metropolitana",
+  },
+  {
+    value: "0335",
+    label: "Región de O’Higgins",
+  },
+];
+
+export const communeList = [
+  {
+    value: "0320",
+    label: "Región de Arica y Parinacota",
+  },
+  {
+    value: "0324",
+    label: "Región de Tarapacá",
+  },
+  {
+    value: "0328",
+    label: "Región de Antofagasta",
+  },
+  {
+    value: "0330",
+    label: "Región de Atacama",
+  },
+  {
+    value: "0332",
+    label: "Región de Coquimbo",
+  },
+  {
+    value: "0333",
+    label: "Región de Valparaíso",
+  },
+  {
+    value: "0334",
+    label: "Región Metropolitana",
+  },
+  {
+    value: "0335",
+    label: "Región de O’Higgins",
+  },
+];
+
+export const institutionList = [
+  {
+    label: "Todas",
+    value: "all",
+  },
+  {
+    label: "039 - Banco Itaú",
+    value: "039",
+  },
+  {
+    label: "031 - HSBC",
+    value: "031",
+  },
+  {
+    label: "016 - BCI",
+    value: "016",
+  },
+  {
+    label: "041 - JP Morgan",
+    value: "041",
+  },
+  {
+    label: "049 - Security",
+    value: "049",
+  },
+];
+
+export const areaList = [
+  {
+    label: "Todas",
+    value: "all",
+  },
+  {
+    label: "05 - Operación TID ",
+    value: "05",
+  },
+  {
+    label: "10 - TESORERIA INTEGRAL",
+    value: "10",
+  },
+  {
+    label: "12 - CONTABILIDAD",
+    value: "12",
+  },
+  {
+    label: "15 -  PASIVOS",
+    value: "15",
+  },
+  {
+    label: "20 - TARJETAS BANCARIAS",
+    value: "20",
+  },
+];

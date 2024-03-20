@@ -2,91 +2,66 @@
 import EnhancedTable from "@/components/Table";
 import { Alignment, Columns, Data } from "@/components/Table/type";
 import { EditOutlined } from "@mui/icons-material";
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { mockData } from "../users/mock-data";
 import Header from "@/components/Table/header";
 import EditUserModal from "./EditUserModal";
-
-const institutionList = [
-  {
-    label: "Todas",
-    value: "all",
-  },
-  {
-    label: "039 - Banco Itaú",
-    value: "039",
-  },
-  {
-    label: "031 - HSBC",
-    value: "031",
-  },
-  {
-    label: "016 - BCI",
-    value: "016",
-  },
-  {
-    label: "041 - JP Morgan",
-    value: "041",
-  },
-  {
-    label: "049 - Security",
-    value: "049",
-  },
-];
-
-const areaList = [
-  {
-    label: "Todas",
-    value: "all",
-  },
-  {
-    label: "05 - Operación TID ",
-    value: "05",
-  },
-  {
-    label: "10 - TESORERIA INTEGRAL",
-    value: "10",
-  },
-  {
-    label: "12 - CONTABILIDAD",
-    value: "12",
-  },
-  {
-    label: "15 -  PASIVOS",
-    value: "15",
-  },
-  {
-    label: "20 - TARJETAS BANCARIAS",
-    value: "20",
-  },
-];
+// import { areaList, institutionList } from "./mock-data";
 
 type modalStateType = { open: boolean, data: Data |null };
 
 const initialModalState: modalStateType = { open: false, data: null };
 
+export const getInstitutions = async () => {
+  return fetch('/api/institution')
+    .then((response) => response.json());
+};
+export const getAreas = async () => {
+  return fetch('/api/area')
+    .then((response) => response.json());
+};
+
+const AllOption = {
+  value: "all",
+  label: "Todas"
+};
+
 const Users = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data[]>([]);
+  const [institutionList, setInstitutionList] = useState<any[]>([]);
+  const [areaList, setAreaList] = useState<any[]>([]);
   const [modalState, setModalState] = useState<modalStateType>(initialModalState);
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch('/api/user');
-      const result = await response.json();
-      setData(result);
-      setLoading(false);
-    }
+  async function fetchData() {
     setLoading(true);
+    const response = await fetch('/api/user');
+    const result = await response.json();
+    setData(result);
+    setLoading(false);
+  };
+  useEffect(() => {
     fetchData();
+    getInstitutions().then((institutions) => {
+      setInstitutionList([AllOption, ...institutions.map((institution: any) => ({
+        value: institution.id,
+        label: `${institution.id} - ${institution.name}`
+      }))]);
+    });
+    getAreas().then((areas) => {
+      setAreaList([AllOption, ...areas.map((area: any) => ({
+        value: area.id,
+        label: `${area.id} - ${area.name}`
+      }))])
+    });
   }, []);
 
   const onEditUser = useCallback((row: Data) => {
     setModalState({ open: true, data: row });
   }, []);
   
-  const onCloseModal = useCallback(() => {
+  const onCloseModal = useCallback((isSubmit: boolean) => {
+    typeof isSubmit === "boolean" && isSubmit && fetchData();
     setModalState(initialModalState);
   }, [])
 
@@ -149,7 +124,7 @@ const Users = () => {
     }}>
       <Header
         title="Usuarios"
-        label="Institución"
+        label="Buscar Usuario por RUT..."
         filters={[
           {
             label: "Institutición",
