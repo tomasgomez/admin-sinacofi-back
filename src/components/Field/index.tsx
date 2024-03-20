@@ -5,27 +5,37 @@ import FormControl from "@mui/material/FormControl";
 import { TextField, TextFieldProps, styled } from "@mui/material";
 
 const StyledTextField = styled(TextField)({
-  '& .MuiInputBase-root.Mui-disabled': {
+  "& .MuiInputBase-root.Mui-disabled": {
     backgroundColor: "#E5E5E5",
     color: "#000000 !important",
   },
-  '& .MuiFormLabel-root.Mui-disabled': {
+  "& .MuiFormLabel-root.Mui-disabled": {
     backgroundColor: "#DFF8FF",
     color: "#565656 !important",
   },
-  '& .MuiFormLabel-root': {
-    backgroundColor: "#DFF8FF",
+  "& .MuiFormLabel-root": {
     color: "#565656 !important",
   },
 });
 
-export default function Field(props: { value?: any, label: string, width: number, options?: any, onChange?: any } & TextFieldProps) {
+export default function Field(
+  props: {
+    value?: any;
+    label: string;
+    width: number;
+    options?: any;
+    onChange?: any;
+  } & TextFieldProps
+) {
   const { width, label, value, onChange } = props;
   const [isFocused, setIsFocused] = React.useState(false);
 
-  const handleChange = React.useCallback((evt: any) => {
-    onChange && onChange(evt.target?.value, evt);
-  }, [onChange])
+  const handleChange = React.useCallback(
+    (evt: any) => {
+      onChange && onChange(evt.target?.value, evt);
+    },
+    [onChange]
+  );
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -48,7 +58,14 @@ export default function Field(props: { value?: any, label: string, width: number
       onBlur={handleBlur}
     >
       <FormControl fullWidth>
-        <StyledTextField {...props} label={label} value={value} onChange={handleChange} />
+        <StyledTextField
+          id="outlined-basic"
+          variant="outlined"
+          {...props}
+          label={label}
+          value={value}
+          onChange={handleChange}
+        />
       </FormControl>
     </Box>
   );

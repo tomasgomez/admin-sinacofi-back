@@ -20,7 +20,7 @@ import { Search } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 
-const SearchField = ({ data, label }: { data: any; label: string }) => {
+const SearchField = ({ data, label = "" }: { data: any; label?: string }) => {
   return (
     <Autocomplete
       freeSolo
@@ -35,7 +35,7 @@ const SearchField = ({ data, label }: { data: any; label: string }) => {
         <TextField
           {...params}
           // size="small"
-          label="Search input"
+          label={label}
           InputProps={{
             ...params.InputProps,
             type: "search",
@@ -51,7 +51,13 @@ const SearchField = ({ data, label }: { data: any; label: string }) => {
   );
 };
 
-const AddElement = ({ label }: { label: string }) => {
+const AddElement = ({
+  label,
+  handleAddLabelButton,
+}: {
+  label: string;
+  handleAddLabelButton?: any;
+}) => {
   return (
     <Button
       component="label"
@@ -63,6 +69,7 @@ const AddElement = ({ label }: { label: string }) => {
         color: "#FFFFFF",
         textTransform: "none",
       }}
+      onClick={handleAddLabelButton}
     >
       {label}
     </Button>
@@ -71,12 +78,13 @@ const AddElement = ({ label }: { label: string }) => {
 
 export default function Header(props: {
   title: string;
-  label: string;
+  label?: string;
   amountMessages?: number;
   filters?: any;
   withIcons?: boolean;
   withSearchBar?: boolean;
   addLabelButton?: string;
+  handleAddLabelButton?: any;
 }) {
   const {
     amountMessages,
@@ -86,6 +94,7 @@ export default function Header(props: {
     withIcons,
     withSearchBar,
     addLabelButton,
+    handleAddLabelButton,
   } = props;
   return (
     <StyledInboxHeaderContent>
@@ -97,18 +106,23 @@ export default function Header(props: {
       >
         <Typography variant="h5">{title}</Typography>
         <div style={{ display: "flex", gap: "12px" }}>
-          {withSearchBar && <SearchField data={[]} label="test" />}
+          {withSearchBar && <SearchField data={[]} label={label} />}
           {filters &&
             filters.map((filter: any) => (
               <Dropdrown
-                key={`dropdown-${filter.label}`} 
+                key={`dropdown-${filter.label}`}
                 label={filter.label}
                 options={filter.list}
                 width={filter.width}
                 defaultValue={filter.defaultValue}
               />
             ))}
-          {addLabelButton && <AddElement label={addLabelButton} />}
+          {addLabelButton && (
+            <AddElement
+              label={addLabelButton}
+              handleAddLabelButton={handleAddLabelButton}
+            />
+          )}
         </div>
       </StyledTitleAndDropdown>
 
