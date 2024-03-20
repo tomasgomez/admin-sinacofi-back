@@ -130,7 +130,7 @@ export default function EnhancedTable({
                 <TableContentRows
                   withCheckbox={withCheckbox}
                   withSwitch={withSwitch}
-                  key={`row-table-data-${row.rut}`}
+                  key={`row-table-data-${index}`}
                   row={row}
                   rowOptions={rowOptions}
                   columns={columns}

@@ -15,6 +15,7 @@ interface ModalProps {
   title: string | any;
   sx?: SxProps<Theme>;
   maxWidth?: string | number;
+  maxHeight?: string | number;
 }
 
 export function Modal(
@@ -29,15 +30,15 @@ export function Modal(
       onClose={props.onClose}
       sx={{
         color: "#151515",
-        maxHeight: "100vh",
+        maxHeight: props.maxHeight || "100vh",
         overflowY: "auto",
-        bgcolor:'rgba(0, 0, 0, 0.1)',
+        bgcolor: "rgba(0, 0, 0, 0.1)",
       }}
     >
       <Box
         p="40px"
         sx={{
-          maxWidth: props.maxWidth || '960px',
+          maxWidth: props.maxWidth || "960px",
           position: "relative",
           left: "50%",
           transform: "translate(-50%, 0)",
@@ -49,7 +50,10 @@ export function Modal(
           ...(props.sx || {}),
         }}
       >
-        <IconButton onClick={props.onClose} sx={{ position: "absolute", right: "12px", top: "12px" }}>
+        <IconButton
+          onClick={props.onClose}
+          sx={{ position: "absolute", right: "12px", top: "12px" }}
+        >
           <CloseRounded />
         </IconButton>
         <Typography variant="h6" mb={"32px"} fontWeight={600}>

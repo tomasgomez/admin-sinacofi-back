@@ -7,7 +7,7 @@ export const columns: Columns[] = [
   {
     id: "code",
     label: "Código",
-    align: Alignment.CENTER,
+    align: Alignment.LEFT,
   },
   {
     id: "name",
@@ -78,17 +78,17 @@ export const columns: Columns[] = [
 
 export const rowOptions = {
   code: { maxwidth: 110, align: Alignment.LEFT },
-  name: { maxwidth: 180, align: Alignment.LEFT },
+  name: { maxwidth: 190, align: Alignment.LEFT },
   type: { maxwidth: 110, align: Alignment.LEFT },
   institutions: {
     maxwidth: 120,
     align: Alignment.LEFT,
   },
   distributionAddress: {
-    maxwidth: 150,
+    maxwidth: 180,
     align: Alignment.LEFT,
   },
-  pamsAddress: { maxwidth: 150, align: Alignment.LEFT },
-  FTAddress: { maxwidth: 150, align: Alignment.LEFT },
+  pamsAddress: { maxwidth: 180, align: Alignment.LEFT },
+  FTAddress: { maxwidth: 180, align: Alignment.LEFT },
   acctions: { maxwidth: 120, align: Alignment.LEFT },
 };

@@ -41,14 +41,18 @@ export function TableHeader(props: EnhancedTableProps) {
           </TableCell>
         )}
         {withStatusSwitch && (
-          <StyledTableCellHeader>Estado</StyledTableCellHeader>
+          <StyledTableCellHeader padding="normal">Estado</StyledTableCellHeader>
         )}
-        {columns.map((columnsData) => (
+        {columns.map((columnsData, index) => (
           <StyledTableCellHeader
             key={columnsData.id}
             align={columnsData.align}
             padding="normal"
             sortDirection={orderBy === columnsData.id ? order : false}
+            style={{
+              paddingRight: index === columnsData.length - 1 ? 16 : 10,
+              paddingLeft: 0,
+            }}
           >
             <TableSortLabel
               active={orderBy === columnsData.id}

@@ -1,14 +1,11 @@
-'use client'
+"use client";
 import { createTheme } from "@mui/material";
 import { green, orange, purple } from "@mui/material/colors";
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface Theme {
     status: {
       danger: string;
-    };
-    typography: {
-      a: string;
     };
   }
   // allow configuration using `createTheme`
@@ -22,14 +19,15 @@ declare module '@mui/material/styles' {
       a?: string;
     };
   }
-};
+}
 
 export const theme = createTheme({
   typography: {
-    // a: {
-    //   fontFamily: "Roboto",
-    // },
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: [
+      "'Roboto', sans-serif",
+      "'Montserrat', sans-serif",
+      "'Arial', sans-serif",
+    ].join(","),
   },
   palette: {
     primary: {

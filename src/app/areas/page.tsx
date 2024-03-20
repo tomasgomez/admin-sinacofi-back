@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import { mockData } from "./mock-data";
 import Header from "@/components/Table/header";
 import { columns, rowOptions } from "./contants";
+import ModalArea from "./modal-area";
 
-const Users = () => {
+const Areas = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);
@@ -20,26 +22,33 @@ const Users = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        color: "#000000",
-        padding: "32px 24px",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: "32px",
-      }}
-    >
-      <Header title="Áreas" label="Institución" addLabelButton="Agregar Área" />
-      {!loading && (
-        <EnhancedTable
-          withSwitch
-          rowOptions={rowOptions}
-          rows={data}
-          columns={columns}
+    <>
+      <div
+        style={{
+          color: "#000000",
+          padding: "32px 24px",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "32px",
+        }}
+      >
+        <Header
+          title="Áreas"
+          addLabelButton="Agregar Área"
+          handleAddLabelButton={() => setIsModalOpen(true)}
         />
-      )}
-    </div>
+        {!loading && (
+          <EnhancedTable
+            withSwitch
+            rowOptions={rowOptions}
+            rows={data}
+            columns={columns}
+          />
+        )}
+      </div>
+      <ModalArea isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    </>
   );
 };
-export default Users;
+export default Areas;
