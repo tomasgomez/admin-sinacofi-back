@@ -1,7 +1,7 @@
 "use client";
 import { createTheme } from "@mui/material";
 import { green, orange, purple } from "@mui/material/colors";
-
+import { montserrat, roboto } from "@/utils/fonts";
 declare module "@mui/material/styles" {
   interface Theme {
     status: {
@@ -20,14 +20,11 @@ declare module "@mui/material/styles" {
     };
   }
 }
-
 export const theme = createTheme({
   typography: {
-    fontFamily: [
-      "'Roboto', sans-serif",
-      "'Montserrat', sans-serif",
-      "'Arial', sans-serif",
-    ].join(","),
+    fontFamily: [roboto.style.fontFamily, montserrat.style.fontFamily].join(
+      ", "
+    ),
   },
   palette: {
     primary: {

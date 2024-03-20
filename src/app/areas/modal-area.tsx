@@ -3,6 +3,7 @@ import { Modal } from "@/components/Modal";
 import Dropdrown from "@/components/Dropdown";
 import { Button, Stack, Typography } from "@mui/material";
 import Field from "@/components/Field";
+import { montserrat, roboto } from "@/utils/fonts";
 
 const ModalAreaContent = ({ onClose }: { onClose: any }) => {
   return (
@@ -45,7 +46,7 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
           variant="h6"
           fontSize={16}
           fontWeight="bold"
-          fontFamily={"Montserrat"}
+          fontFamily={montserrat.style.fontFamily}
         >
           Configuracion FTI
         </Typography>
