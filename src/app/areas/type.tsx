@@ -1,13 +1,15 @@
 
 export interface Data {
-  code: string;
+  id: string;
   name: string;
-  type: string;
-  institutions: string;
-  distributionAddress: string;
-  pamsAddress: string;
-  FTAddress: string;
+  description: string;
+  institutionCode: string;
+  distributionPath: string;
+  pathPams: string;
+  pathSams: string;
+  ftiiCode: string;
   acctions: any;
+  conectivityType: string;
 }
 
 export enum Alignment {

@@ -12,7 +12,7 @@ import {
 interface ModalProps {
   open?: boolean;
   onClose?: () => void;
-  title: string | any;
+  title?: string | any;
   sx?: SxProps<Theme>;
   maxWidth?: string | number;
   maxHeight?: string | number;
@@ -56,9 +56,11 @@ export function Modal(
         >
           <CloseRounded />
         </IconButton>
-        <Typography variant="h6" mb={"32px"} fontWeight={600}>
-          {props.title}
-        </Typography>
+        {props?.title && (
+          <Typography variant="h6" mb={"32px"} fontWeight={600}>
+            {props.title}
+          </Typography>
+        )}
         {props.children}
       </Box>
     </MuiModal>

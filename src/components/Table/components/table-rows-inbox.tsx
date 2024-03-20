@@ -18,7 +18,12 @@ type CustomCellType = {
   rowOptions?: any;
 };
 
-const CustomCell = ({ value, render: Component, row, rowOptions }: CustomCellType) => {
+const CustomCell = ({
+  value,
+  render: Component,
+  row,
+  rowOptions,
+}: CustomCellType) => {
   return (
     <StyledTabCell
       component="th"
@@ -75,14 +80,17 @@ export function TableContentRows(props: TableProps) {
         )}
         {withSwitch && (
           <StyledTabCell>
-            <TableSwitch onChange={() => console.log("Switch Change")} />
+            <TableSwitch
+              onChange={() => console.log("Switch Change")}
+              checked={row?.isActive}
+            />
           </StyledTabCell>
         )}
         {/* ///////////////////////  Rows /////////////////////// */}
         {columns.map((column: any, idx: number) => (
           <CustomCell
             key={`row-${column.id}-${idx}`}
-            value={row[column.id]}
+            value={row[column.id] || "-"}
             row={row}
             render={column.render}
             rowOptions={rowOptions[column.id]}

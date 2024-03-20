@@ -11,12 +11,14 @@ export default function Dropdrown(props: {
   options: any;
   defaultValue?: any
   selected?: any;
+  onChange?: any;
 }) {
-  const { width, label, options, defaultValue, selected } = props;
+  const { width, label, options, defaultValue, selected, onChange } = props;
   const [optionSelected, setOptionSelected] = React.useState(selected || defaultValue);
   const [isFocused, setIsFocused] = React.useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
+    onChange(event.target.value as string);
     setOptionSelected(event.target.value as string);
   };
 

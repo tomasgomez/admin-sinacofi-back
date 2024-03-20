@@ -5,7 +5,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export const columns: Columns[] = [
   {
-    id: "code",
+    id: "id",
     label: "Código",
     align: Alignment.LEFT,
   },
@@ -15,80 +15,41 @@ export const columns: Columns[] = [
     align: Alignment.LEFT,
   },
   {
-    id: "type",
+    id: "conectivityType",
     label: "Typo",
     align: Alignment.LEFT,
   },
   {
-    id: "institutions",
+    id: "institutionCode",
     label: "Instituciones",
     align: Alignment.LEFT,
   },
   {
-    id: "distributionAddress",
+    id: "distributionPath",
     label: "Dirección de distribucion",
     align: Alignment.LEFT,
   },
   {
-    id: "pamsAddress",
+    id: "pathPams",
     label: "Dirección PAMS",
     align: Alignment.LEFT,
   },
-  { id: "FTAddress", label: "Dirección FT", align: Alignment.LEFT },
-  {
-    id: "acctions",
-    label: "Acciones",
-    align: Alignment.CENTER,
-    render: ({ value }: { value: any }) => {
-      return (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <IconButton
-            aria-label="Editar"
-            size="small"
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              console.log({ value });
-            }}
-          >
-            <EditOutlined fontSize="small" />
-          </IconButton>
-          <IconButton
-            aria-label="Editar"
-            size="small"
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              console.log({ value });
-            }}
-          >
-            <DeleteOutlineIcon fontSize="small" />
-          </IconButton>
-        </div>
-      );
-    },
-  },
+  { id: "pathSams", label: "Dirección FT", align: Alignment.LEFT },
 ];
 
 export const rowOptions = {
-  code: { maxwidth: 110, align: Alignment.LEFT },
+  id: { maxwidth: 110, align: Alignment.LEFT },
   name: { maxwidth: 190, align: Alignment.LEFT },
-  type: { maxwidth: 110, align: Alignment.LEFT },
-  institutions: {
+  conectivityType: { maxwidth: 110, align: Alignment.LEFT },
+  institutionCode: {
     maxwidth: 120,
     align: Alignment.LEFT,
   },
-  distributionAddress: {
+  distributionPath: {
     maxwidth: 180,
     align: Alignment.LEFT,
   },
-  pamsAddress: { maxwidth: 180, align: Alignment.LEFT },
-  FTAddress: { maxwidth: 180, align: Alignment.LEFT },
+  pathPams: { maxwidth: 180, align: Alignment.LEFT },
+  pathSams: { maxwidth: 180, align: Alignment.LEFT },
   acctions: { maxwidth: 120, align: Alignment.LEFT },
 };
