@@ -28,6 +28,9 @@ import {
 import {
   errorHandler,
 } from '@/backend/utils/errorHandler';
+import {
+  deleteInstitutionUseCase
+} from '@/backend/usecases/institution/delete';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse < Institution[] | Error > ) {
   try {
@@ -119,11 +122,47 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         res.status(405).end('Method Not Allowed');
         break;
       case Methods.DELETE:
-        res.status(405).end('Method Not Allowed');
-        break;
+        try {
+          console.log('Deleting Institution...');
 
-      default:
-        res.status(405).end(`Method ${method} Not Allowed`);
+          let institutionId = validateInstitutionId(req.query);
+
+          if (institutionId instanceof Error) {
+            res.status(400).json(institutionId);
+            return;
+          }
+
+          /* Use the PrismaInstitutionAdapter to delete the Institution from the database */
+          var deletedInstitution = await deleteInstitutionUseCase.execute(institutionId);
+
+          if (deletedInstitution instanceof Error) {
+            res.status(400).json(deletedInstitution);
+            return;
+          }
+
+          if (!deletedInstitution) {
+            res.status(404).json(new Error('Institution not found'));
+            return;
+          }
+
+          let institutions: Institution[] = [];
+
+          if (deletedInstitution instanceof Institution) {
+            institutions.push(deletedInstitution);
+            res.status(200).json(institutions);
+            /* Return the deleted Institution */
+            return;
+          }
+
+          res.status(500).json(new Error('Internal server error'));
+          return;
+        } catch (error) {
+          console.error('Error deleting Institution:', error);
+          res.status(500).json(new Error('Internal server error'));
+        }
+
+        default:
+          res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error: any) {
     console.log('Error:', error);

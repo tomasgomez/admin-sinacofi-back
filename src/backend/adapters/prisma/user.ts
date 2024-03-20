@@ -21,7 +21,7 @@ export class PrismaUserAdapter implements UserRepository {
       const prisma = new PrismaClientWrapper();
 
       const prismaClient = prisma.getClient();
- 
+
       /* Destructure the attributes from User entity */
       const {
         dni,
@@ -56,7 +56,7 @@ export class PrismaUserAdapter implements UserRepository {
           skip: parseInt(offset)
         });
       }
-      
+
 
       /* If the user is not found, return an error */
       if (users.length === 0) {
@@ -112,4 +112,24 @@ export class PrismaUserAdapter implements UserRepository {
     }
   }
 
+  async delete(user: User): Promise < User | Error > {
+    try {
+      console.log('Deleting user...');
+
+      const prisma = new PrismaClientWrapper().getClient();
+
+      /* Delete the user */
+      const deletedUser = await prisma.user.delete({
+        where: {
+          dni: user.dni
+        }
+      });
+
+      return deletedUser;
+    } catch (error: any) {
+
+      console.error('Error deleting user:', error);
+      return error;
+    }
+  }
 }

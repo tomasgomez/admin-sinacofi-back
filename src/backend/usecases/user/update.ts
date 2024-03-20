@@ -40,6 +40,5 @@ export class UpdateUser {
     }
 }
 
-
 const userRepository: UserRepository = new PrismaAdapter();
 export const updateUserUseCase = new UpdateUser(userRepository); 
