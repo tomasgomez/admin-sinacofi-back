@@ -7,7 +7,8 @@ export class Area {
     pathSams : string; // Path of the SAMs
     ftiiCode : string; // FTII code
     conectivityType : string; // Conectivity type (TIP_BROW, TIP_FSVR, TIP_FTRA)
-    institutionCode: string; 
+    institutionCode: string;
+    isActive: boolean;
 
     constructor() {
         this.id = '';
@@ -19,5 +20,6 @@ export class Area {
         this.ftiiCode = '';
         this.conectivityType = '';
         this.institutionCode = '';
+        this.isActive = true;
     }
 }

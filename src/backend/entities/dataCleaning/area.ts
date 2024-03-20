@@ -17,7 +17,7 @@ export function validateAreaEdition(id: string, data: any): Area {
     errors.push('Missing required attribute: id');
   }
 
-  const attributesPresent = Object.keys(jsonData).some(attr => ['name', 'description', 'distributionPath', 'pathPams', 'pathSams', 'ftiiCode', 'conectivityType', 'institutionCode'].includes(attr));
+  const attributesPresent = Object.keys(jsonData).some(attr => ['name', 'description', 'distributionPath', 'pathPams', 'pathSams', 'ftiiCode', 'conectivityType', 'institutionCode', 'isActive'].includes(attr));
   if (!attributesPresent) {
     errors.push('At least one editable attribute must be present');
   }

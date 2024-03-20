@@ -1,7 +1,6 @@
 // prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
@@ -9,22 +8,46 @@ datasource db {
   url      = "postgresql://sinacofi:hola123@34.135.68.241:5432/sinacofi-mvp"
 }
 model User {
-  id                             Int       @id @default(autoincrement())
-  dni                            String
+  dni                            String     @id
   password                       String
-  password_expiration_date       String
-  public_name                    String
-  user_group                     String
-  user_profile                   String
-  area                           String
+  passwordExpirationDate       String
+  publicName                    String
+  userGroup                     String
+  userProfile                   String
+  areaCode                        String
   location                       String
   region                         String
   comunne                        String
   status                         String
+  institutionCode               String
 
-  user_message_level             String?
-  signature_class                String?
-  signature_level                String?
-  password_electronic_signature  String?
-  dni_electronic_signature       String?
+  email                         String?
+  userMessageLevel             String?
+  signatureClass                String?
+  signatureLevel                String?
+  passwordElectronicSignature  String?
+  dniElectronicSignature       String?
+}
+
+model Area {
+  id               String    @id // Area code id (e.g. 037)
+  name             String    // Name of the area (e.g. IT)
+  description      String    // Description of the area (e.g. Information Technology)
+  institutionCode  String    // Institution code
+  distributionPath String   // Distribution 
+  pathPams         String   // Path of the PAMs
+  pathSams         String   // Path of the SAMs
+  ftiiCode         String   // FTII code
+  conectivityType  String   // Connectivity type (TIP_BROW, TIP_FSVR, TIP_FTRA)
+  institutions     Institution[] // Establishing a many-to-many relationship
+  isActive         Boolean   @default(true) // isActive
+}
+
+model Institution {
+  id         String    @id // Financial institution code id (e.g. 037)
+  fullName   String    // Complete name of the financial institution (e.g. Banco Santander)
+  rut        String    // RUT of the financial institution (e.g. 97.036.000-K)
+  name       String    // Name abbreviation of the financial institution (e.g. Santander)
+  areaCode   String    // Area code of the financial institution (e.g. 037)
+  areas      Area[]    // Establishing a many-to-many relationship
 }
