@@ -11,7 +11,8 @@ import {
 import {
   validateAreaId,
   validateAreaEdition,
-  validateGetArea
+  validateGetArea,
+  validateAreaCreation
 } from '../../backend/entities/dataCleaning/area';
 
 import {
@@ -21,6 +22,10 @@ import {
 import {
   Area
 } from '../../backend/entities/area';
+
+import {
+  createAreaUseCase
+} from '@/backend/usecases/area/create';
 
 import {
   updateAreaUseCase
@@ -41,7 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
     switch (method) {
       case Methods.GET:
         try {
-          console.log('Fetching Area...');
 
           /* Validate the query params and get the AreaId */
           let result = validateGetArea(req.query);
@@ -55,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
 
 
           /* Use the PrismaAreaAdapter to get the Area from the database */
-          var area = await getAreaUseCase.execute(areaId, count, offset)
+          let area = await getAreaUseCase.execute(areaId, count, offset)
 
           /* If the Area is not found, return a 404 error */
           if (!area) {
@@ -73,7 +77,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         break;
       case Methods.PUT:
         try {
-          console.log('Editting Area...');
 
           let areaId = validateAreaId(req.query);
 
@@ -91,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
           }
 
           /* Use the PrismaAreaAdapter to create the Area in the database */
-          var newArea = await updateAreaUseCase.execute(areaId, checkedArea);
+          let newArea = await updateAreaUseCase.execute(areaId, checkedArea);
 
           if (newArea instanceof Error) {
             res.status(400).json(newArea);
@@ -105,14 +108,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
 
           let areas: Area[] = [];
 
-          if (newArea instanceof Area) {
-            areas.push(newArea);
-            res.status(200).json(areas);
-            /* Return the new Area */
-            return;
-          }
-
-          res.status(500).json(new Error('Internal server error'));
+          /* Return the updated Area */
+          areas.push(newArea);
+          res.status(200).json(areas);
           return;
 
         } catch (error) {
@@ -121,50 +119,72 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         }
         break;
       case Methods.POST:
-        res.status(405).end('Method Not Allowed');
-        break;
-      case Methods.DELETE:
         try {
-          console.log('Deleting Area...');
 
-          let areaId = validateAreaId(req.query);
+          let area = validateAreaCreation(req.body);
 
-          if (areaId instanceof Error) {
-            res.status(400).json(areaId);
+          if (area instanceof Error) {
+            res.status(400).json(area);
             return;
           }
 
-          /* Use the PrismaAreaAdapter to delete the Area from the database */
-          var deletedArea = await deleteAreaUseCase.execute(areaId);
+          /* Use the PrismaAreaAdapter to create the Area in the database */
+          let newArea = await createAreaUseCase.execute(area);
 
-          if (deletedArea instanceof Error) {
-            res.status(400).json(deletedArea);
-            return;
-          }
-
-          if (!deletedArea) {
-            res.status(404).json(new Error('Area not found'));
+          if (newArea instanceof Error) {
+            res.status(400).json(newArea);
             return;
           }
 
           let areas: Area[] = [];
 
-          if (deletedArea instanceof Area) {
-            areas.push(deletedArea);
-            res.status(200).json(areas);
-            /* Return the deleted Area */
-            return;
-          }
-
-          res.status(500).json(new Error('Internal server error'));
+          /* Return the new Area */
+          areas.push(newArea);
+          res.status(201).json(areas);
           return;
-        } catch (error) {
-          console.error('Error deleting Area:', error);
+        } catch (error: any) {
+          console.error('Error creating Area:', error);
           res.status(500).json(new Error('Internal server error'));
         }
 
-        default:
-          res.status(405).end(`Method ${method} Not Allowed`);
+      case Methods.DELETE:
+          try {
+
+            let areaId = validateAreaId(req.query);
+
+            if (areaId instanceof Error) {
+              res.status(400).json(areaId);
+              return;
+            }
+
+            /* Use the PrismaAreaAdapter to delete the Area from the database */
+            let deletedArea = await deleteAreaUseCase.execute(areaId);
+
+            if (deletedArea instanceof Error) {
+              res.status(400).json(deletedArea);
+              return;
+            }
+
+            if (!deletedArea) {
+              res.status(404).json(new Error('Area not found'));
+              return;
+            }
+
+            let areas: Area[] = [];
+
+
+            /* Return the deleted Area */
+            areas.push(deletedArea);
+            res.status(200).json(areas);
+            return;
+
+          } catch (error) {
+            console.error('Error deleting Area:', error);
+            res.status(500).json(new Error('Internal server error'));
+          }
+
+          default:
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error: any) {
     console.log('Error:', error);

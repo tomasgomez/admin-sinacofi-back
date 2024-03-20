@@ -3,7 +3,7 @@ import {
 } from '../../interfaces/institutionRepository';
 
 import {
- Institution
+  Institution
 } from '../../entities/institution';
 
 import {
@@ -14,7 +14,6 @@ import {
 export class PrismaInstitutionAdapter implements InstitutionRepository {
   async find(attributes: Institution, count: string, offset: string): Promise < Institution[] | Error > {
     try {
-      console.log('Fetching institutions...');
 
       let institutions: Institution[];
 
@@ -87,16 +86,20 @@ export class PrismaInstitutionAdapter implements InstitutionRepository {
 
   async update(institution: Institution): Promise < Institution | Error > {
     try {
-      console.log('Updating institution...');
 
       const prisma = new PrismaClientWrapper().getClient();
+
+      // Filter out empty values from the institution object
+      const dataToUpdate = Object.fromEntries(
+        Object.entries(institution).filter(([_, value]) => value !== '')
+      );
 
       /* Update the institution */
       const updatedInstitution = await prisma.institution.update({
         where: {
           id: institution.id
         },
-        data: institution
+        data: dataToUpdate
       });
 
       return updatedInstitution;
@@ -109,7 +112,6 @@ export class PrismaInstitutionAdapter implements InstitutionRepository {
 
   async delete(institution: Institution): Promise < Institution | Error > {
     try {
-      console.log('Deleting institution...');
 
       const prisma = new PrismaClientWrapper().getClient();
 

@@ -89,7 +89,8 @@ async function main() {
             pathSams: 'SAMs',
             ftiiCode: 'TID_FTII',
             conectivityType: 'TIP_BROW',
-            institutionCode: '0035 - BCI'
+            institutionCode: '0035 - BCI',
+            isActive: true
         }
     });
 
@@ -108,7 +109,8 @@ async function main() {
             pathSams: 'Riesgos SAMs',
             ftiiCode: 'RIESGOS_FTII',
             conectivityType: 'TIP_FTRA',
-            institutionCode: '0035 - BCI'
+            institutionCode: '0035 - BCI',
+            isActive: true
         }
     });
 
@@ -127,7 +129,8 @@ async function main() {
             pathSams: 'Contabilidad SAMs',
             ftiiCode: 'CONTABILIDAD_FTII',
             conectivityType: 'TIP_FTRA',
-            institutionCode: '0035 - BCI'
+            institutionCode: '0035 - BCI',
+            isActive: true
         }
     });
 

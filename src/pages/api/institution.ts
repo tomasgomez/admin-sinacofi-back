@@ -10,7 +10,8 @@ import {
 import {
   validateInstitutionId,
   validateInstitutionEdition,
-  validateGetInstitution
+  validateGetInstitution,
+  validateInstitutionCreation
 } from '../../backend/entities/dataCleaning/institution';
 
 import {
@@ -20,6 +21,10 @@ import {
 import {
   Institution
 } from '../../backend/entities/institution';
+
+import {
+  createInstitutionUseCase
+} from '@/backend/usecases/institution/create';
 
 import {
   updateInstitutionUseCase
@@ -40,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
     switch (method) {
       case Methods.GET:
         try {
-          console.log('Fetching Institution...');
 
           /* Validate the query params and get the InstitutionId */
           let result = validateGetInstitution(req.query);
@@ -54,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
 
 
           /* Use the PrismaInstitutionAdapter to get the Institution from the database */
-          var institution = await getInstitutionUsecase.execute(institutionId, count, offset)
+          let institution = await getInstitutionUsecase.execute(institutionId, count, offset)
 
           /* If the Institution is not found, return a 404 error */
           if (!institution) {
@@ -90,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
           }
 
           /* Use the PrismaInstitutionAdapter to create the Institution in the database */
-          var newInstitution = await updateInstitutionUseCase.execute(institutionId, checkedInstitution);
+          let newInstitution = await updateInstitutionUseCase.execute(institutionId, checkedInstitution);
 
           if (newInstitution instanceof Error) {
             res.status(500).json(newInstitution);
@@ -104,13 +108,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
 
           let institutions: Institution[] = [];
 
-          if (newInstitution instanceof Institution) {
-            institutions.push(newInstitution);
-            res.status(200).json(institutions);
-            return;
-          }
 
-          res.status(500).json(new Error('Internal server error'));
+          institutions.push(newInstitution);
+          res.status(200).json(institutions);
           return;
 
         } catch (error) {
@@ -119,11 +119,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
         }
         break;
       case Methods.POST:
-        res.status(405).end('Method Not Allowed');
+        try {
+          console.log('Creating Institution...');
+
+          let institution = validateInstitutionCreation(req.body);
+
+          if (institution instanceof Error) {
+            res.status(400).json(institution);
+            return;
+          }
+
+          /* Use the PrismaInstitutionAdapter to create the Institution in the database */
+          let newInstitution = await createInstitutionUseCase.execute(institution);
+
+          if (newInstitution instanceof Error) {
+            res.status(400).json(newInstitution);
+            return;
+          }
+
+          let institutions: Institution[] = [];
+
+          /* Return the new Institution */
+          institutions.push(newInstitution);
+          res.status(201).json(institutions);
+          return;
+        } catch (error: any) {
+          console.error('Error creating Institution:', error);
+          res.status(500).json(new Error('Internal server error'));
+          return;
+        }
         break;
+
       case Methods.DELETE:
         try {
-          console.log('Deleting Institution...');
 
           let institutionId = validateInstitutionId(req.query);
 
@@ -133,7 +161,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
           }
 
           /* Use the PrismaInstitutionAdapter to delete the Institution from the database */
-          var deletedInstitution = await deleteInstitutionUseCase.execute(institutionId);
+          let deletedInstitution = await deleteInstitutionUseCase.execute(institutionId);
 
           if (deletedInstitution instanceof Error) {
             res.status(400).json(deletedInstitution);
@@ -147,22 +175,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse 
 
           let institutions: Institution[] = [];
 
-          if (deletedInstitution instanceof Institution) {
-            institutions.push(deletedInstitution);
-            res.status(200).json(institutions);
-            /* Return the deleted Institution */
-            return;
-          }
-
-          res.status(500).json(new Error('Internal server error'));
+          institutions.push(deletedInstitution);
+          res.status(200).json(institutions);
+          /* Return the deleted Institution */
           return;
+
+
         } catch (error) {
           console.error('Error deleting Institution:', error);
           res.status(500).json(new Error('Internal server error'));
+          return;
         }
+        break;
 
-        default:
-          res.status(405).end(`Method ${method} Not Allowed`);
+      default:
+        res.status(405).end(`Method ${method} Not Allowed`);
+        return;
     }
   } catch (error: any) {
     console.log('Error:', error);

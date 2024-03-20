@@ -1,6 +1,23 @@
 
 import { Institution } from '../institution';
 
+export function validateInstitutionCreation(data: any): Institution {
+  const errors: string[] = [];
+  let institution: Institution;
+
+  let jsonData: Institution | string = typeof data === 'string' ? JSON.parse(data) : data as Institution;
+
+  if (jsonData instanceof String) {
+    errors.push('Invalid institution data');
+    throw new Error(`Invalid institution data: ${errors.join(', ')}`);
+  }
+
+  institution = jsonData as Institution;
+
+
+  return institution;
+}
+
 export function validateInstitutionEdition(id: string, data: any): Institution {
   const errors: string[] = [];
   let institution: Institution;

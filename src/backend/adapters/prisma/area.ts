@@ -14,7 +14,6 @@ import {
 export class PrismaAreaAdapter implements AreaRepository {
   async find(attributes: Area, count: string, offset: string): Promise < Area[] | Error > {
     try {
-      console.log('Fetching area...');
 
       let areas: Area[];
 
@@ -86,16 +85,20 @@ export class PrismaAreaAdapter implements AreaRepository {
 
   async update(area: Area): Promise < Area | Error > {
     try {
-      console.log('Updating area...');
 
       const prisma = new PrismaClientWrapper().getClient();
+
+      // Filter out empty values from the area object
+      const dataToUpdate = Object.fromEntries(
+        Object.entries(area).filter(([_, value]) => value !== '')
+      );
 
       /* Update the area */
       const updatedArea = await prisma.area.update({
         where: {
           id: area.id
         },
-        data: area
+        data: dataToUpdate
       });
 
       return updatedArea;
@@ -108,7 +111,6 @@ export class PrismaAreaAdapter implements AreaRepository {
 
   async delete(area: Area): Promise < Area | Error > {
     try {
-      console.log('Deleting area...');
 
       const prisma = new PrismaClientWrapper().getClient();
 

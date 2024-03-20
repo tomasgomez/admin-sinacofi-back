@@ -1,5 +1,21 @@
 import { Area } from '../area';
 
+export function validateAreaCreation(data: any): Area {
+  const errors: string[] = [];
+  let area: Area;
+
+  let jsonData: Area | string = typeof data === 'string' ? JSON.parse(data) : data as Area;
+
+  if (jsonData instanceof String) {
+    errors.push('Invalid area data');
+    throw new Error(`Invalid area data: ${errors.join(', ')}`);
+  }
+
+  area = jsonData as Area;
+
+  return area;
+}
+
 export function validateAreaEdition(id: string, data: any): Area {
   const errors: string[] = [];
   let area: Area;

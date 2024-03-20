@@ -14,7 +14,6 @@ import {
 export class PrismaUserAdapter implements UserRepository {
   async find(attributes: User, count: string, offset: string): Promise < User[] | Error > {
     try {
-      console.log('Fetching users...');
 
       let users: User[];
 
@@ -92,16 +91,20 @@ export class PrismaUserAdapter implements UserRepository {
 
   async update(user: User): Promise < User | Error > {
     try {
-      console.log('Updating user...');
 
       const prisma = new PrismaClientWrapper().getClient();
+
+      // Filter out empty values from the user object
+      const dataToUpdate = Object.fromEntries(
+        Object.entries(user).filter(([_, value]) => value !== '')
+      );
 
       /* Update the user */
       const updatedUser = await prisma.user.update({
         where: {
           dni: user.dni
         },
-        data: user
+        data: dataToUpdate
       });
 
       return updatedUser;
@@ -114,7 +117,6 @@ export class PrismaUserAdapter implements UserRepository {
 
   async delete(user: User): Promise < User | Error > {
     try {
-      console.log('Deleting user...');
 
       const prisma = new PrismaClientWrapper().getClient();
 
