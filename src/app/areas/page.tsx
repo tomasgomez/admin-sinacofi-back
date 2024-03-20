@@ -1,15 +1,23 @@
 "use client";
 import EnhancedTable from "@/components/Table";
 import { Data } from "./type";
-import React, { useEffect, useMemo, useState } from "react";
-// import { mockData } from "./mock-data";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  createContext,
+  useContext,
+} from "react";
 import Header from "@/components/Table/header";
 import { columns, rowOptions } from "./contants";
 import ModalArea from "./modal-area";
 import { EditOutlined } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { getData, deleteData } from "./api-calls";
+import { getData, deleteData, updateData } from "./api-calls";
+import ModalSuccess from "@/components/ModalSuccessArea";
+import { MyContexArea } from "./context";
+import ModalDecision from "@/components/ModalDecisionArea";
 
 const Areas = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,6 +25,12 @@ const Areas = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Data | null>(null);
+  const [isModalSuccessOpen, setIsModalSuccessOpen] = useState<boolean>(false);
+  const [isEditConfirmationModalOpen, setIsEditConfirmationModalOpen] =
+    useState<boolean>(false);
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    useState<boolean>(false);
+  const [dataModal, setDataModal] = useState<any>({});
 
   const getNewData = async () => {
     setLoading(true);
@@ -76,7 +90,10 @@ const Areas = () => {
           <IconButton
             aria-label="Editar"
             size="small"
-            onClick={() => handleDelete(row.id)}
+            onClick={() => {
+              setDataModal({ id: row.id, name: row?.name });
+              setIsDeleteConfirmationModalOpen(true);
+            }}
           >
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
@@ -90,7 +107,15 @@ const Areas = () => {
   }, [columns, acciones]);
 
   return (
-    <>
+    <MyContexArea.Provider
+      value={{
+        setIsModalSuccessOpen,
+        isEdit,
+        selectedRow,
+        setDataModal,
+        setIsEditConfirmationModalOpen,
+      }}
+    >
       <div
         style={{
           color: "#000000",
@@ -115,13 +140,49 @@ const Areas = () => {
           />
         )}
       </div>
-      <ModalArea
-        isModalOpen={isModalOpen}
-        isEdit={isEdit}
-        onClose={handleCloseModal}
-        data={selectedRow}
+      <ModalArea isModalOpen={isModalOpen} onClose={handleCloseModal} />
+      <ModalSuccess
+        isOpen={isModalSuccessOpen}
+        onClose={() => {
+          setIsModalSuccessOpen(false);
+          getNewData();
+        }}
+        title="Área Creada Exitosamente"
+        code={dataModal?.code}
+        area={dataModal?.area}
       />
-    </>
+      <ModalDecision
+        isOpen={isDeleteConfirmationModalOpen}
+        onClose={() => {
+          setIsDeleteConfirmationModalOpen(false);
+          setDataModal({});
+        }}
+        onConfirm={async () => {
+          setIsDeleteConfirmationModalOpen(false);
+          await handleDelete(dataModal?.id);
+          setDataModal({});
+        }}
+        title="¿Quieres a eliminar esta área y toda su configuración?"
+        code={dataModal?.id}
+        area={dataModal?.name}
+      />
+      <ModalDecision
+        isOpen={isEditConfirmationModalOpen}
+        onClose={() => {
+          setIsEditConfirmationModalOpen(false);
+          setDataModal({});
+        }}
+        onConfirm={async () => {
+          setIsEditConfirmationModalOpen(false);
+          await updateData(dataModal.id, dataModal);
+          handleCloseModal(true);
+          setDataModal({});
+        }}
+        title="¿Quieres a Editar esta área?"
+        code={dataModal?.id}
+        area={dataModal?.name}
+      />
+    </MyContexArea.Provider>
   );
 };
 export default Areas;

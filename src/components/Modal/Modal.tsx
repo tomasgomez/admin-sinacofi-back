@@ -16,6 +16,7 @@ interface ModalProps {
   sx?: SxProps<Theme>;
   maxWidth?: string | number;
   maxHeight?: string | number;
+  withoutClose?: boolean;
 }
 
 export function Modal(
@@ -50,12 +51,14 @@ export function Modal(
           ...(props.sx || {}),
         }}
       >
-        <IconButton
-          onClick={props.onClose}
-          sx={{ position: "absolute", right: "12px", top: "12px" }}
-        >
-          <CloseRounded />
-        </IconButton>
+        {!props.withoutClose && (
+          <IconButton
+            onClick={props.onClose}
+            sx={{ position: "absolute", right: "12px", top: "12px" }}
+          >
+            <CloseRounded />
+          </IconButton>
+        )}
         {props?.title && (
           <Typography variant="h6" mb={"32px"} fontWeight={600}>
             {props.title}

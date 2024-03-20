@@ -7,6 +7,7 @@ import { montserrat, roboto } from "@/utils/fonts";
 import ModalSwitch from "./modal-switch";
 import { replaceEmptyStrings } from "@/utils/utils";
 import { createData, updateData } from "./api-calls";
+import { MyContexArea } from "./context";
 
 function completeObjectWithEmptyValues(obj: any) {
   const emptyObject = {
@@ -25,27 +26,26 @@ function completeObjectWithEmptyValues(obj: any) {
   return { ...emptyObject, ...obj };
 }
 
-const ModalAreaContent = ({
-  onClose,
-  isEdit,
-  data,
-}: {
-  onClose: any;
-  data: any;
-  isEdit?: boolean;
-}) => {
+const ModalAreaContent = ({ onClose }: { onClose: any }) => {
+  const {
+    setIsModalSuccessOpen,
+    isEdit,
+    selectedRow,
+    setDataModal,
+    setIsEditConfirmationModalOpen,
+  } = React.useContext(MyContexArea) as any;
+
   const [modalData, setModalData] = React.useState(
-    replaceEmptyStrings(data) || {}
+    replaceEmptyStrings(selectedRow) || {}
   );
 
   const addOption = (array: any, field: string) => {
-    if (!data) return array;
-    if (!data[field]) return array;
-    return [...array, { value: data[field], label: data[field] }];
+    if (!selectedRow) return array;
+    if (!modalData[field]) return array;
+    return [...array, { value: modalData[field], label: modalData[field] }];
   };
 
   const handleChange = (field: string, value: any) => {
-    console.log(field, value);
     setModalData((prevData: any) => ({
       ...prevData,
       [field]: value,
@@ -54,11 +54,13 @@ const ModalAreaContent = ({
 
   const handleSave = (modalData: any, isEdit?: boolean) => {
     if (isEdit) {
-      updateData(modalData.id, modalData);
-      onClose(true);
+      setDataModal(modalData);
+      setIsEditConfirmationModalOpen(true);
     } else {
       createData(completeObjectWithEmptyValues(modalData));
+      setDataModal({ code: modalData?.id, area: modalData?.name });
       onClose(true);
+      setIsModalSuccessOpen(true);
     }
   };
 
@@ -89,13 +91,18 @@ const ModalAreaContent = ({
               alignItems="center"
               marginRight={4}
             >
-              <ModalSwitch checked={data?.isActive} />
+              <ModalSwitch
+                checked={modalData?.isActive}
+                onChange={(e: any) =>
+                  handleChange("isActive", !modalData?.isActive)
+                }
+              />
               <Stack direction="column" justifyContent="space-between">
                 <Typography variant="subtitle2" fontSize={14}>
                   Estado
                 </Typography>
                 <Typography variant="subtitle1" fontSize={14}>
-                  {data?.isActive ? "Activa" : "Inactiva"}
+                  {modalData?.isActive ? "Activa" : "Inactiva"}
                 </Typography>
               </Stack>
             </Stack>
@@ -305,13 +312,9 @@ const ModalAreaContent = ({
 const ModalArea = ({
   isModalOpen,
   onClose,
-  isEdit,
-  data,
 }: {
   isModalOpen: boolean;
   onClose: any;
-  isEdit: boolean;
-  data?: any;
 }) => {
   return (
     <div>
@@ -319,11 +322,12 @@ const ModalArea = ({
         maxWidth={700}
         maxHeight={900}
         open={isModalOpen}
-        onClose={onClose}
+        onClose={() => onClose(false)}
       >
-        <ModalAreaContent data={data} isEdit={isEdit} onClose={onClose} />
+        <ModalAreaContent onClose={() => onClose(false)} />
       </Modal>
     </div>
   );
 };
+
 export default ModalArea;
