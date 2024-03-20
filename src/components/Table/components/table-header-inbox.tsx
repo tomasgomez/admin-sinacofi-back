@@ -51,7 +51,7 @@ export function TableHeader(props: EnhancedTableProps) {
             sortDirection={orderBy === columnsData.id ? order : false}
             style={{
               paddingRight: index === columnsData.length - 1 ? 16 : 10,
-              paddingLeft: 0,
+              paddingLeft: 16,
             }}
           >
             <TableSortLabel

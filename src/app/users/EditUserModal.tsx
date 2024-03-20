@@ -75,6 +75,8 @@ export default function EditUserModal({
   const [currentState, setCurrentState] = useState(initialValues);
   const [institutionList, setInstitutionList] = useState<any[]>([]);
   const [areaList, setAreaList] = useState<any[]>([]);
+  const [confirmPassword, setConfirmPassword] = useState<any>(initialValues?.passwordElectronicSignature);
+  const [isNotValid, setIsNotValid] = useState<boolean>(false);
 
   const validity = useMemo(() => {
     if (!initialValues?.passwordExpirationDate) {
@@ -107,9 +109,13 @@ export default function EditUserModal({
   }, []);
 
   const onSubmit = useCallback(async () => {
+    if (currentState?.passwordElectronicSignature !== confirmPassword) {
+      return setIsNotValid(true);
+    }
+    setIsNotValid(false);
     await updateUser(currentState);
     onClose(true);
-  }, [currentState]);
+  }, [currentState, confirmPassword]);
 
   return (
     <Modal
@@ -165,24 +171,24 @@ export default function EditUserModal({
       </Stack>
       <Typography variant="subtitle1">Roles de Usuario</Typography>
       <EnhancedTable
+        withPagination={false}
+        minWidth="620px"
         columns={[
           {
             label: "Grupo",
             id: "group",
+            width: "50%",
           },
           {
             label: "Perfil",
             id: "profile",
+            width: "50%",
           },
         ]}
         rows={[
           {
-            group: "05 - Administrador Instituciones",
-            profile: "05 - Administrador Instituciones",
-          },
-          {
-            group: "03 - Tratador de Mensajes",
-            profile: "03 - Tratador Mensajes Tipo 17",
+            group: currentState?.userGroup,
+            profile: currentState?.userProfile,
           },
         ]}
       />
@@ -212,8 +218,6 @@ export default function EditUserModal({
           options={communeList}
           onChange={(value: any) => onChange("comunne", value)}
         />
-        {/* <Dropdrown label="Comuna" width={195}
-        selected={currentState?.comunne} options={[]} /> */}
       </Stack>
       <Typography variant="subtitle1" mb="20px" mt="24px">
         Institución y Área
@@ -280,7 +284,7 @@ export default function EditUserModal({
           <Dropdrown
             label="Nivel Firma"
             selected={currentState?.signatureLevel}
-            width={166}
+            width={183}
             options={signatureLevelOptions}
             onChange={(value: any) => onChange("signatureLevel", value)}
           />
@@ -295,10 +299,34 @@ export default function EditUserModal({
       >
         <Typography variant="subtitle2">Password Firma Electrónica</Typography>
         <Stack direction="row" gap="20px">
-          <Field label="Password FE" width={183} value={currentState?.passwordElectronicSignature} />
-          <Field label="Confirmación Password FE" width={183} value={currentState?.passwordElectronicSignature} />
+          <Field
+            label="Password FE"
+            type="password"
+            width={183}
+            value={currentState?.passwordElectronicSignature}
+            onChange={(value: any) => onChange("passwordElectronicSignature", value)}
+          />
+          <Field
+            label="Confirmación Password FE"
+            width={183}
+            type="password"
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+          />
         </Stack>
       </Stack>
+      {isNotValid && (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          mb="10px"
+          alignItems="center"
+        >
+          <Typography variant="caption" sx={{ color: "red" }}>
+            Password FE && Confirmación Password FE tienes
+          </Typography>
+        </Stack>
+      )}
       <Stack direction="row" justifyContent="flex-end" gap="12px">
         <Button variant="outlined" onClick={onClose}>
           Cancel

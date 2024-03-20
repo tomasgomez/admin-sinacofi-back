@@ -14,20 +14,24 @@ import { getComparator, stableSort } from "./utils";
 
 type TablePropsType = {
   withCheckbox?: boolean;
+  withPagination?: boolean;
   withSwitch?: boolean;
   rows: any[];
   columns: any[];
   rowOptions?: any;
   defaultOrderKey?: keyof Data;
+  minWidth?: number | string;
 };
 
 export default function EnhancedTable({
   withCheckbox,
   withSwitch,
+  withPagination = true,
   rows = [],
   columns = [],
   rowOptions = {},
   defaultOrderKey,
+  minWidth = 750
 }: TablePropsType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>(
@@ -105,7 +109,7 @@ export default function EnhancedTable({
       {/* Definir tamaño de la tabla */}
       <TableContainer sx={{ maxHeight: 456, maxWidth: 1200 }}>
         <Table
-          sx={{ minWidth: 750 }}
+          sx={{ minWidth }}
           aria-labelledby="tableTitle"
           size="medium"
           stickyHeader
@@ -152,15 +156,17 @@ export default function EnhancedTable({
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 7, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {withPagination && (
+        <TablePagination
+          rowsPerPageOptions={[5, 7, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   );
 }

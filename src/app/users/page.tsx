@@ -62,7 +62,7 @@ const Users = () => {
       {
         id: "dni",
         label: "RUT",
-        align: Alignment.CENTER,
+        align: Alignment.LEFT,
       },
       {
         id: "publicName",
