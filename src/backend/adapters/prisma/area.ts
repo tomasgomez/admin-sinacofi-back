@@ -70,9 +70,25 @@ export class PrismaAreaAdapter implements AreaRepository {
 
       const prisma = new PrismaClientWrapper().getClient();
 
+      /* Empty area object */
+      let areaData: Area = new Area();
+
+      /* If id is provided, include it in the areaData */
+      if (area.id !== undefined && area.id !== null) {
+        areaData.id = area.id;
+      }
+
+      /* Include other attributes if they are provided */
+      if (Object.keys(area).length > 1) {
+        areaData = {
+          ...areaData,
+          ...area
+        };
+      }
+
       /* Create a new area */
       const newArea = await prisma.area.create({
-        data: area
+        data: areaData
       });
 
       return newArea

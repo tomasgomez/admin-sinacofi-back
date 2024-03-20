@@ -71,9 +71,25 @@ export class PrismaInstitutionAdapter implements InstitutionRepository {
 
       const prisma = new PrismaClientWrapper().getClient();
 
+      /* Empty institution object */
+      let institutionData: Institution = new Institution();
+
+      /* If id is provided, add it to the institution object */
+      if (institution.id !== undefined && institution.id !== null) {
+        institutionData.id = institution.id;
+      }
+
+      /* Include other attributes if they are provided */
+      if (Object.keys(institution).length > 1) {
+        institutionData = {
+          ...institutionData,
+          ...institution
+        };
+      }
+
       /* Create a new institution */
       const newInstitution = await prisma.institution.create({
-        data: institution
+        data: institutionData
       });
 
       return newInstitution
