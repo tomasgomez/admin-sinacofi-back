@@ -6,7 +6,7 @@ import EnhancedTable from "@/components/Table";
 import { Button, Stack, Typography } from "@mui/material";
 import { communeList, locationList, regionList } from "./mock-data";
 import { Modal } from "@/components/Modal";
-import { getAreas, getInstitutions } from "./page";
+import { getAreas, getInstitutions } from "./services";
 
 async function updateUser(values: any) {
   const response = await fetch(`/api/user?id=${values.dni}`, {

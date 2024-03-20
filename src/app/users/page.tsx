@@ -6,20 +6,12 @@ import { IconButton } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "@/components/Table/header";
 import EditUserModal from "./EditUserModal";
+import { getAreas, getInstitutions } from "./services";
 // import { areaList, institutionList } from "./mock-data";
 
 type modalStateType = { open: boolean, data: Data |null };
 
 const initialModalState: modalStateType = { open: false, data: null };
-
-export const getInstitutions = async () => {
-  return fetch('/api/institution')
-    .then((response) => response.json());
-};
-export const getAreas = async () => {
-  return fetch('/api/area')
-    .then((response) => response.json());
-};
 
 const AllOption = {
   value: "all",
