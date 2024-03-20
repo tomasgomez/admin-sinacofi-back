@@ -23,6 +23,7 @@
     "react": "^18",
     "react-dom": "^18",
     "require-hook": "^0.1.2",
+    "sharp": "^0.33.2",
     "winston": "^3.12.0"
   },
   "devDependencies": {
