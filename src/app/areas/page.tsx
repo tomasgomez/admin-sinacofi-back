@@ -43,6 +43,10 @@ const Areas = () => {
     getNewData();
   }, []);
 
+  const handleOnChangeSwitch = async (id: string, value: boolean) => {
+    await updateData(id, { isActive: value });
+  };
+
   const handleOpenModalEdit = (row: any) => {
     setSelectedRow(row);
     setIsEdit(true);
@@ -137,6 +141,7 @@ const Areas = () => {
             rowOptions={rowOptions}
             rows={data}
             columns={newColumns}
+            onChangeSwitch={handleOnChangeSwitch}
           />
         )}
       </div>

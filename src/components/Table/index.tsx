@@ -16,6 +16,7 @@ type TablePropsType = {
   withCheckbox?: boolean;
   withPagination?: boolean;
   withSwitch?: boolean;
+  onChangeSwitch?: any;
   rows: any[];
   columns: any[];
   rowOptions?: any;
@@ -26,12 +27,13 @@ type TablePropsType = {
 export default function EnhancedTable({
   withCheckbox,
   withSwitch,
+  onChangeSwitch,
   withPagination = true,
   rows = [],
   columns = [],
   rowOptions = {},
   defaultOrderKey,
-  minWidth = 750
+  minWidth = 750,
 }: TablePropsType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>(
@@ -132,6 +134,7 @@ export default function EnhancedTable({
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
                 <TableContentRows
+                  onChangeSwitch={onChangeSwitch}
                   withCheckbox={withCheckbox}
                   withSwitch={withSwitch}
                   key={`row-table-data-${index}`}

@@ -54,8 +54,11 @@ export function TableContentRows(props: TableProps) {
     labelId,
     withCheckbox,
     withSwitch,
+    onChangeSwitch,
     columns,
   } = props;
+
+  const [switchActive, setSwitchActive] = React.useState(row.isActive);
 
   return (
     <>
@@ -81,8 +84,11 @@ export function TableContentRows(props: TableProps) {
         {withSwitch && (
           <StyledTabCell>
             <TableSwitch
-              onChange={() => console.log("Switch Change")}
-              checked={row?.isActive}
+              onChange={() => {
+                onChangeSwitch(row.id, !row.isActive);
+                setSwitchActive(!switchActive);
+              }}
+              checked={switchActive}
             />
           </StyledTabCell>
         )}

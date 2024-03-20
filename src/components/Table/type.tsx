@@ -73,5 +73,6 @@ export interface TableProps {
   rowOptions?: any;
   columns: any;
   isItemSelected?: boolean;
+  onChangeSwitch?: any;
   handleClick: (event: React.MouseEvent<unknown>, id: number) => void;
 }
