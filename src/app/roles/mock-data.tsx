@@ -1,6 +1,6 @@
 export const mockData: any/* Data[] */ = [
   {
-    profile: "07 - Administrador Global",
+    profile: "03 - Tratador Mensajes Tipo 6",
     numberOfInstitutions: 1,
     numberOfUsers: 5,
     associatedUsers: [

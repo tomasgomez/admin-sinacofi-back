@@ -66,7 +66,7 @@ const Users = () => {
       {
         id: "profile",
         label: "Profile",
-        align: Alignment.CENTER,
+        align: Alignment.LEFT,
       },
       {
         id: "numberOfInstitutions",
