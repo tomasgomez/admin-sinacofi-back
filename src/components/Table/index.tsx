@@ -108,14 +108,13 @@ export default function EnhancedTable({
 
   return (
     <Paper sx={{ width: "100%", mb: 2 }}>
-      {/* Definir tamaño de la tabla */}
-      <TableContainer sx={{ maxHeight: 456, maxWidth: 1200 }}>
+      <TableContainer>
         <Table
           sx={{ minWidth }}
           aria-labelledby="tableTitle"
           size="medium"
           stickyHeader
-          width="1200px"
+          width="100%"
         >
           <TableHeader
             withCheckboxAll={withCheckbox}
