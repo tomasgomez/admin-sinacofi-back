@@ -1,13 +1,7 @@
 "use client";
 import EnhancedTable from "@/components/Table";
 import { Data } from "./type";
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  createContext,
-  useContext,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "@/components/Table/header";
 import { columns, rowOptions } from "./contants";
 import ModalArea from "./modal-area";
@@ -18,6 +12,7 @@ import { getData, deleteData, updateData } from "./api-calls";
 import ModalSuccess from "@/components/ModalSuccessArea";
 import { MyContexArea } from "./context";
 import ModalDecision from "@/components/ModalDecisionArea";
+import { ErrorModal } from "@/components/error-modal";
 
 const Areas = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -30,6 +25,7 @@ const Areas = () => {
     useState<boolean>(false);
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState<boolean>(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
   const [dataModal, setDataModal] = useState<any>({});
 
   const getNewData = async () => {
@@ -45,6 +41,8 @@ const Areas = () => {
 
   const handleOnChangeSwitch = async (id: string, value: boolean) => {
     await updateData(id, { isActive: value });
+    const data = await getData();
+    setData(data);
   };
 
   const handleOpenModalEdit = (row: any) => {
@@ -118,6 +116,7 @@ const Areas = () => {
         selectedRow,
         setDataModal,
         setIsEditConfirmationModalOpen,
+        setIsErrorModalOpen,
       }}
     >
       <div
@@ -167,7 +166,7 @@ const Areas = () => {
           await handleDelete(dataModal?.id);
           setDataModal({});
         }}
-        title="¿Quieres a eliminar esta área y toda su configuración?"
+        title="¿Quieres eliminar esta área y toda su configuración?"
         code={dataModal?.id}
         area={dataModal?.name}
       />
@@ -183,9 +182,20 @@ const Areas = () => {
           handleCloseModal(true);
           setDataModal({});
         }}
-        title="¿Quieres a Editar esta área?"
+        title="¿Quieres Editar esta área?"
         code={dataModal?.id}
         area={dataModal?.name}
+      />
+      <ErrorModal
+        title="Lo sentimos no se pudo crear el área."
+        message="El código de área ya esta asignado."
+        withoutClose
+        onCancel={() => {
+          setIsErrorModalOpen(false);
+          handleCloseModal(false);
+        }}
+        onRetry={() => setIsErrorModalOpen(false)}
+        open={isErrorModalOpen}
       />
     </MyContexArea.Provider>
   );

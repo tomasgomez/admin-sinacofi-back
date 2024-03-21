@@ -1,30 +1,21 @@
-import * as React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Modal } from "@/components/Modal";
 import Dropdrown from "@/components/Dropdown";
 import { Button, Stack, Typography } from "@mui/material";
 import Field from "@/components/Field";
-import { montserrat, roboto } from "@/utils/fonts";
+import { montserrat } from "@/utils/fonts";
 import ModalSwitch from "./modal-switch";
 import { replaceEmptyStrings } from "@/utils/utils";
-import { createData, updateData } from "./api-calls";
+import { createData } from "./api-calls";
 import { MyContexArea } from "./context";
-
-function completeObjectWithEmptyValues(obj: any) {
-  const emptyObject = {
-    id: "",
-    name: "",
-    description: "",
-    institutionCode: "",
-    distributionPath: "",
-    pathPams: "",
-    pathSams: "",
-    ftiiCode: "",
-    conectivityType: "",
-    isActive: false,
-  };
-
-  return { ...emptyObject, ...obj };
-}
+import { getInstitutions } from "./services";
+import {
+  addOption,
+  generateInstitutionsOptions,
+  isFieldDisabled,
+  formatId,
+} from "./utils";
+import { conectivityTypeOptions } from "./contants";
 
 const ModalAreaContent = ({ onClose }: { onClose: any }) => {
   const {
@@ -33,16 +24,23 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
     selectedRow,
     setDataModal,
     setIsEditConfirmationModalOpen,
+    setIsErrorModalOpen,
   } = React.useContext(MyContexArea) as any;
+
+  const [institutions, setInstitutions] = React.useState<any[]>([]);
 
   const [modalData, setModalData] = React.useState(
     replaceEmptyStrings(selectedRow) || {}
   );
 
-  const addOption = (array: any, field: string) => {
-    if (!selectedRow) return array;
-    if (!modalData[field]) return array;
-    return [...array, { value: modalData[field], label: modalData[field] }];
+  useEffect(() => {
+    getInstitutions().then((institutions: any) => {
+      setInstitutions(generateInstitutionsOptions(institutions));
+    });
+  }, []);
+
+  const handleChangeNumeric = (field: string, value: any) => {
+    handleChange(field, formatId(value, 2));
   };
 
   const handleChange = (field: string, value: any) => {
@@ -52,17 +50,26 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
     }));
   };
 
-  const handleSave = (modalData: any, isEdit?: boolean) => {
+  const handleSave = async (modalData: any, isEdit?: boolean) => {
     if (isEdit) {
       setDataModal(modalData);
       setIsEditConfirmationModalOpen(true);
     } else {
-      createData(completeObjectWithEmptyValues(modalData));
-      setDataModal({ code: modalData?.id, area: modalData?.name });
-      onClose(true);
-      setIsModalSuccessOpen(true);
+      try {
+        await createData(modalData);
+        setDataModal({ code: modalData?.id, area: modalData?.name });
+        onClose(true);
+        setIsModalSuccessOpen(true);
+      } catch (error) {
+        setIsErrorModalOpen(true);
+      }
     }
   };
+
+  const disabledField = useMemo(
+    () => isFieldDisabled(modalData?.conectivityType),
+    [modalData?.conectivityType]
+  );
 
   return (
     <>
@@ -117,7 +124,7 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
             label="Codigo Area"
             value={modalData?.id}
             disabled={isEdit}
-            onChange={(e: any) => handleChange("id", e)}
+            onChange={(e: any) => handleChangeNumeric("id", e)}
             width={143}
           />
           <Field
@@ -142,12 +149,8 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
             label="Tipo de conectividad"
             width={236}
             options={addOption(
-              [
-                { value: "Browser", label: "Browser" },
-                { value: "FileServer", label: "File Server" },
-                { value: "FileTransfer", label: "File Transfer" },
-              ],
-              "conectivityType"
+              conectivityTypeOptions,
+              selectedRow?.conectivityType
             )}
             selected={modalData.conectivityType}
             onChange={(e: any) => handleChange("conectivityType", e)}
@@ -158,13 +161,18 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
           direction="row"
           justifyContent="space-between"
         >
-          <Field label="Mensajes Almacenados" value="-" disabled width={236} />
+          <Field
+            label="Mensajes Almacenados"
+            value="1000"
+            disabled
+            width={236}
+          />
           <Dropdrown
             label="Instituciones"
             width={364}
             selected={modalData?.institutionCode}
             onChange={(e: any) => handleChange("institutionCode", e)}
-            options={addOption([], "institutionCode")}
+            options={addOption(institutions, selectedRow?.institutionCode)}
           />
         </Stack>
       </Stack>
@@ -248,8 +256,8 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         <Field
           label="Ruta"
           width={447}
-          disabled
-          value={modalData?.distributionPath || "-"}
+          disabled={disabledField}
+          value={modalData?.distributionPath}
           onChange={(e: any) => handleChange("distributionPath", e)}
         />
       </Stack>
@@ -267,8 +275,8 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         </Typography>
         <Field
           label="Ruta"
-          disabled
-          value={modalData?.pathPams || "-"}
+          disabled={disabledField}
+          value={modalData?.pathPams}
           onChange={(e: any) => handleChange("pathPams", e)}
           width={447}
         />
@@ -288,18 +296,27 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         <Field
           label="Ruta"
           width={447}
-          disabled
-          value={modalData?.pathSams || "-"}
+          disabled={disabledField}
+          value={
+            modalData?.conectivityType === "Browser" && !isEdit
+              ? "-"
+              : modalData?.pathSams
+          }
           onChange={(e: any) => handleChange("pathSams", e)}
         />
       </Stack>
 
       <Stack direction="row" justifyContent="flex-end" gap="12px">
-        <Button variant="outlined" onClick={onClose}>
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          style={{ textTransform: "none" }}
+        >
           Cancel
         </Button>
         <Button
           variant="contained"
+          style={{ color: "white", textTransform: "none" }}
           onClick={() => handleSave(modalData, isEdit)}
         >
           Guardar
@@ -318,11 +335,7 @@ const ModalArea = ({
 }) => {
   return (
     <div>
-      <Modal
-        maxWidth={700}
-        open={isModalOpen}
-        onClose={() => onClose(false)}
-      >
+      <Modal maxWidth={700} open={isModalOpen} onClose={() => onClose(false)}>
         <ModalAreaContent onClose={() => onClose(false)} />
       </Modal>
     </div>

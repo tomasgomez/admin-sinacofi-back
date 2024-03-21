@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 interface ModalFooterProps {
   placeContent?: "end" | "start" | "center";
+  sx?: any;
 }
 
 export function ModalFooter(props: React.PropsWithChildren<ModalFooterProps>) {
@@ -14,6 +15,7 @@ export function ModalFooter(props: React.PropsWithChildren<ModalFooterProps>) {
         px: 8,
         pb: 8,
         placeContent: props.placeContent || "end",
+        ...props.sx,
       }}
     >
       {props.children}

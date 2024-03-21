@@ -1,7 +1,4 @@
 import { Alignment, Columns } from "./type";
-import { EditOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export const columns: Columns[] = [
   {
@@ -53,3 +50,9 @@ export const rowOptions = {
   pathSams: { maxwidth: 180, align: Alignment.LEFT },
   acctions: { maxwidth: 120, align: Alignment.LEFT },
 };
+
+export const conectivityTypeOptions = [
+  { value: "Browser", label: "Browser" },
+  { value: "FileServer", label: "File Server" },
+  { value: "FileTransfer", label: "File Transfer" },
+];

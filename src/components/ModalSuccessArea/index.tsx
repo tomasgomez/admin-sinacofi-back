@@ -51,7 +51,7 @@ const ModalSuccess = ({
                 alignItems: "center",
                 p: 2,
               }}
-              width={319}
+              width={260}
             >
               <Typography fontSize={14} fontWeight={400}>
                 Codigo: {code || "-"}

@@ -52,5 +52,6 @@ export async function createData(newData: any) {
     }
   } catch (error) {
     console.error("Error al crear con estos datos:", error);
+    throw new Error("Error al realizar la solicitud POST");
   }
 }
