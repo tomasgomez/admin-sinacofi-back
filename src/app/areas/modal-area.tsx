@@ -320,7 +320,6 @@ const ModalArea = ({
     <div>
       <Modal
         maxWidth={700}
-        maxHeight={900}
         open={isModalOpen}
         onClose={() => onClose(false)}
       >
