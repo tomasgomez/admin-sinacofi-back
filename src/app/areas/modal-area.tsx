@@ -121,14 +121,14 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
           justifyContent="space-between"
         >
           <Field
-            label="Codigo Area"
+            label="Código Área"
             value={modalData?.id}
             disabled={isEdit}
             onChange={(e: any) => handleChangeNumeric("id", e)}
             width={143}
           />
           <Field
-            label="Nombre de Area"
+            label="Nombre de Área"
             value={modalData?.name}
             onChange={(e: any) => handleChange("name", e)}
             width={457}
@@ -140,7 +140,7 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
           justifyContent="space-between"
         >
           <Field
-            label="Descripcion"
+            label="Descripción"
             value={modalData?.description}
             onChange={(e: any) => handleChange("description", e)}
             width={364}
@@ -234,7 +234,7 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         justifyContent="space-between"
         style={{ marginBottom: 16 }}
       >
-        <Field label="Codigo FTI" disabled value="Ninguno" width={300} />
+        <Field label="Código FTI" disabled value="Ninguno" width={300} />
         <Field label="Tiempo de Acceso" disabled value="0" width={300} />
       </Stack>
 

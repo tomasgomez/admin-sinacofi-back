@@ -13,7 +13,7 @@ export const columns: Columns[] = [
   },
   {
     id: "conectivityType",
-    label: "Typo",
+    label: "Tipo",
     align: Alignment.LEFT,
   },
   {
