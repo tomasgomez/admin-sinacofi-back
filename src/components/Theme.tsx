@@ -25,6 +25,10 @@ export const theme = createTheme({
     fontFamily: [roboto.style.fontFamily, montserrat.style.fontFamily].join(
       ", "
     ),
+    button:{
+      fontFamily:montserrat.style.fontFamily,
+      textTransform:'none'
+    }
   },
   palette: {
     primary: {

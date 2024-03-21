@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 interface ModalFooterProps {
-  placeContent?: "end" | "start";
+  placeContent?: "end" | "start" | "center";
 }
 
 export function ModalFooter(props: React.PropsWithChildren<ModalFooterProps>) {

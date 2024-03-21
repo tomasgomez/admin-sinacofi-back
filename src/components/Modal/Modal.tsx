@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-interface ModalProps {
+export interface ModalProps {
   open?: boolean;
   onClose?: () => void;
   title?: string | any;
