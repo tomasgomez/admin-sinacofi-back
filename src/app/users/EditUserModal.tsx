@@ -169,7 +169,7 @@ export default function EditUserModal({
           />
         </Stack>
       </Stack>
-      <Typography variant="subtitle1">Roles de Usuario</Typography>
+      <Typography variant="subtitle1" mb="20px">Roles de Usuario</Typography>
       <EnhancedTable
         withPagination={false}
         minWidth="620px"
@@ -260,7 +260,7 @@ export default function EditUserModal({
         <Typography variant="subtitle2">Nivel TRMS</Typography>
         <Dropdrown
           label="Seleccionar Nivel"
-          width={166}
+          width={183}
           selected={currentState?.userMessageLevel}
           options={trmsLevelOptions}
           onChange={(value: any) => onChange("userMessageLevel", value)}
@@ -290,7 +290,8 @@ export default function EditUserModal({
           />
         </Stack>
       </Stack>
-      <Stack
+      {/* Not sure if this functionality go to production */}
+      {/* <Stack
         direction="row"
         justifyContent="space-between"
         mb="20px"
@@ -326,7 +327,7 @@ export default function EditUserModal({
             Password FE && Confirmación Password FE tienes
           </Typography>
         </Stack>
-      )}
+      )} */}
       <Stack direction="row" justifyContent="flex-end" gap="12px">
         <Button variant="outlined" onClick={onClose}>
           Cancel

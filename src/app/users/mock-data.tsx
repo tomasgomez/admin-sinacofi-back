@@ -164,35 +164,35 @@ export const regionList = [
 export const communeList = [
   {
     value: "0320",
-    label: "Región de Arica y Parinacota",
+    label: "Alhué",
   },
   {
     value: "0324",
-    label: "Región de Tarapacá",
+    label: "Buin",
   },
   {
     value: "0328",
-    label: "Región de Antofagasta",
+    label: "Calera de Tango",
   },
   {
     value: "0330",
-    label: "Región de Atacama",
+    label: "Cerrillos",
   },
   {
     value: "0332",
-    label: "Región de Coquimbo",
+    label: "Cerro Navia",
   },
   {
     value: "0333",
-    label: "Región de Valparaíso",
+    label: "Colina",
   },
   {
     value: "0334",
-    label: "Región Metropolitana",
+    label: "Conchalí",
   },
   {
     value: "0335",
-    label: "Región de O’Higgins",
+    label: "Curacaví",
   },
 ];
 
