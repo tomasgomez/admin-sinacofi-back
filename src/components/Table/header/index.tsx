@@ -16,41 +16,10 @@ import {
   Typography,
 } from "@mui/material";
 import Dropdrown from "@/components/Dropdown";
-import { Search } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { montserrat } from "@/utils/fonts";
-
-const SearchField = ({ data, label = "" }: { data: any; label?: string }) => {
-  return (
-    <Autocomplete
-      freeSolo
-      id="free-solo-2-demo"
-      disableClearable
-      options={data.map((option: any) => option.title)}
-      sx={{
-        width: "310px",
-        height: "48px",
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          // size="small"
-          label={label}
-          InputProps={{
-            ...params.InputProps,
-            type: "search",
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
-      )}
-    />
-  );
-};
+import SearchField from "../SearchField";
 
 const AddElement = ({
   label,
@@ -68,8 +37,8 @@ const AddElement = ({
       style={{
         backgroundColor: "#00B2E2",
         color: "#FFFFFF",
-        textTransform: "none",
         fontFamily: montserrat.style.fontFamily,
+        textTransform: "none",
       }}
       onClick={handleAddLabelButton}
     >
