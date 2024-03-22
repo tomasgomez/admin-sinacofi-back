@@ -25,6 +25,7 @@ const Menu = ({ children, options }: { children?: any, options: any }) => {
         open={open}
         onClose={handleClose}
         anchorEl={anchorEl}
+        autoFocus={false}
       >
         {options.length && options.map((option: any, idx: number) => (
           <MenuItem

@@ -7,7 +7,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "@/components/Table/header";
 import EditUserModal from "./EditUserModal";
 import { getAreas, getInstitutions } from "./services";
-// import { areaList, institutionList } from "./mock-data";
 
 type modalStateType = { open: boolean, data: Data |null };
 
