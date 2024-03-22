@@ -34,7 +34,7 @@ const Users = () => {
   };
   useEffect(() => {
     fetchData();
-    getInstitutions().then((institutions) => {
+    getInstitutions().then((institutions = []) => {
       setInstitutionList([AllOption, ...institutions.map((institution: any) => ({
         value: institution.id,
         label: `${institution.id} - ${institution.name}`

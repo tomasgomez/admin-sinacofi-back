@@ -65,18 +65,18 @@ const Users = () => {
       },
       {
         id: "profile",
-        label: "Profile",
+        label: "Perfil",
         align: Alignment.LEFT,
       },
       {
         id: "numberOfInstitutions",
-        label: "Numero de Instituciones",
+        label: "Número de Instituciones",
         align: Alignment.LEFT,
       },
      
       {
         id: "numberOfUsers",
-        label: "Numero de Usuarios",
+        label: "Número de Usuarios",
         align: Alignment.LEFT,
       },
       {
@@ -115,7 +115,7 @@ const Users = () => {
             defaultValue: "all"
           },
           {
-            label: "Area",
+            label: "Área",
             list: areaList,
             width: "197px",
             defaultValue: "all"
