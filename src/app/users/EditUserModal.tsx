@@ -89,7 +89,6 @@ export default function EditUserModal({
   }, initialValues);
 
   const onChange = useCallback((key: string, value: any) => {
-    console.log({ [key]: value });
     setCurrentState((prev: any) => ({ ...prev, [key]: value }));
   }, []);
 

@@ -103,12 +103,10 @@ const navList = [
 const SideBar = () => {
   const [open, setOpen] = useState("");
   const pathname = usePathname();
-  console.log({ pathname });
   const handleClick = (section: string) => {
     setOpen(section === open ? "" : section);
   };
 
-  console.log({ open });
   useEffect(() => {
     const path = pathname?.split("/");
     if (path) {

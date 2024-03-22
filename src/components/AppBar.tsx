@@ -12,7 +12,6 @@ const Time = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentTime(new Date());
-      console.log({ updateTime: new Date() });
     }, 1000);
     console.log("TIMER:", { timer,  });
 
