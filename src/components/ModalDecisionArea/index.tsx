@@ -71,6 +71,7 @@ const ModalDecision = ({
                 padding: 16,
                 height: 49,
                 width: 121,
+                fontFamily: montserrat.style.fontFamily,
               }}
               onClick={onClose}
             >
@@ -86,6 +87,7 @@ const ModalDecision = ({
                 padding: 16,
                 height: 49,
                 width: 121,
+                fontFamily: montserrat.style.fontFamily,
               }}
               onClick={onConfirm}
             >

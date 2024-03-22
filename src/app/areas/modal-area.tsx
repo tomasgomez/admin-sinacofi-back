@@ -238,7 +238,12 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         <Field label="Tiempo de Acceso" disabled value="0" width={300} />
       </Stack>
 
-      <Typography variant="h6" fontSize={16} style={{ marginBottom: 16 }}>
+      <Typography
+        variant="h6"
+        fontSize={16}
+        style={{ marginBottom: 16 }}
+        fontFamily={montserrat.style.fontFamily}
+      >
         Directorios
       </Typography>
 
@@ -310,13 +315,20 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
         <Button
           variant="outlined"
           onClick={onClose}
-          style={{ textTransform: "none" }}
+          style={{
+            textTransform: "none",
+            fontFamily: montserrat.style.fontFamily,
+          }}
         >
           Cancel
         </Button>
         <Button
           variant="contained"
-          style={{ color: "white", textTransform: "none" }}
+          style={{
+            color: "white",
+            textTransform: "none",
+            fontFamily: montserrat.style.fontFamily,
+          }}
           onClick={() => handleSave(modalData, isEdit)}
         >
           Guardar

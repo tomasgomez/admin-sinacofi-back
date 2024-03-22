@@ -70,6 +70,7 @@ const ModalSuccess = ({
               textTransform: "none",
               padding: 16,
               height: 48,
+              fontFamily: montserrat.style.fontFamily,
             }}
             onClick={onClose}
           >
