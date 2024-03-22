@@ -77,6 +77,12 @@ const Users = () => {
         id: "institutionCode",
         label: "Institución",
         align: Alignment.LEFT,
+        render: ({ value }: { value: any }) => {
+          const institution = institutionList?.find((institution: any) => institution.value === value);
+          return (
+            institution ? institution.label : value
+          );
+        }
       },
       {
         id: "areaCode",
@@ -102,7 +108,7 @@ const Users = () => {
       },
     ];
     return columnList;
-  }, [onEditUser])
+  }, [onEditUser, institutionList])
 
   return (
     <div style={{
@@ -118,7 +124,7 @@ const Users = () => {
         label="Buscar Usuario por RUT..."
         filters={[
           {
-            label: "Institutición",
+            label: "Institución",
             list: institutionList,
             width: "206px",
             defaultValue: "all"
