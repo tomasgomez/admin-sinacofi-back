@@ -26,8 +26,9 @@ const Menu = ({ children, options }: { children?: any, options: any }) => {
         onClose={handleClose}
         anchorEl={anchorEl}
       >
-        {options.length && options.map((option: any) => (
+        {options.length && options.map((option: any, idx: number) => (
           <MenuItem
+            key={`${option.label}-${idx}`}
             onClick={handleItemClick(option.onClick)}
             autoFocus={false}
             sx={{

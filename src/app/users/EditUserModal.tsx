@@ -231,7 +231,7 @@ export default function EditUserModal({
           onChange={(value: any) => onChange("institutionCode", value)}
         />
         <Dropdrown
-          label="Area"
+          label="Área"
           width={301}
           selected={currentState?.areaCode}
           options={areaList}
