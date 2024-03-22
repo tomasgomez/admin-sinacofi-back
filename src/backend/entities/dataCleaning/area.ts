@@ -13,6 +13,14 @@ export function validateAreaCreation(data: any): Area {
 
   area = jsonData as Area;
 
+  if (!area.id || typeof area.id !== 'string' || area.id.trim() === '') {
+    errors.push('Missing required attribute: id');
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Invalid area data: ${errors.join(', ')}`);
+  }
+
   return area;
 }
 
