@@ -1,4 +1,4 @@
-export var users = [{
+export const users = [{
         dni: '19117638',
         password: 'hola123',
         passwordExpirationDate: "2024-12-10",
