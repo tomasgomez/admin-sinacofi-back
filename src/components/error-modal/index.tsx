@@ -1,7 +1,8 @@
 import React from "react";
-import { Modal, ModalContent, ModalFooter, ModalProps } from "../Modal";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Modal, ModalFooter, ModalProps } from "../Modal";
+import { Button, Stack, Typography } from "@mui/material";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import { montserrat } from "@/utils/fonts";
 
 export type ErrorModalTypes = ModalProps & {
   title: string;
@@ -22,7 +23,11 @@ export function ErrorModal(props: ErrorModalTypes) {
         <Typography color={"red"} fontSize={"56px"}>
           <WarningAmberIcon fontSize="inherit" />
         </Typography>
-        <Typography fontWeight={700} fontSize={"18px"}>
+        <Typography
+          fontWeight={700}
+          fontSize={"18px"}
+          fontFamily={montserrat.style.fontFamily}
+        >
           {props.title}
         </Typography>
         <Typography fontSize={"14px"}>{props.message}</Typography>
@@ -31,14 +36,25 @@ export function ErrorModal(props: ErrorModalTypes) {
         <Button
           onClick={props.onCancel}
           variant="outlined"
-          sx={{ paddingX: 2, paddingY: 1, borderRadius: 3 }}
+          sx={{
+            paddingX: 2,
+            paddingY: 1,
+            borderRadius: 3,
+            fontFamily: montserrat.style.fontFamily,
+          }}
         >
           Cancelar
         </Button>
         <Button
           onClick={props.onRetry}
           variant="contained"
-          sx={{ color: "white", paddingX: 2, paddingY: 1, borderRadius: 3 }}
+          sx={{
+            color: "white",
+            paddingX: 2,
+            paddingY: 1,
+            borderRadius: 3,
+            fontFamily: montserrat.style.fontFamily,
+          }}
         >
           Volver a intentar
         </Button>

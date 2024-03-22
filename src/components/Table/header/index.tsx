@@ -19,6 +19,7 @@ import Dropdrown from "@/components/Dropdown";
 import { Search } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import { montserrat } from "@/utils/fonts";
 
 const SearchField = ({ data, label = "" }: { data: any; label?: string }) => {
   return (
@@ -68,6 +69,7 @@ const AddElement = ({
         backgroundColor: "#00B2E2",
         color: "#FFFFFF",
         textTransform: "none",
+        fontFamily: montserrat.style.fontFamily,
       }}
       onClick={handleAddLabelButton}
     >
@@ -104,7 +106,9 @@ export default function Header(props: {
         }}
         width="100%"
       >
-        <Typography variant="h5">{title}</Typography>
+        <Typography variant="h5" fontFamily={montserrat.style.fontFamily}>
+          {title}
+        </Typography>
         <div style={{ display: "flex", gap: "12px" }}>
           {withSearchBar && <SearchField data={[]} label={label} />}
           {filters &&
