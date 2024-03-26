@@ -72,7 +72,7 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
     } else {
       try {
         await createData(modalData);
-        onClose(true);
+        onClose(false);
         setModalState({
           type: "success",
           title: "Área Creada Exitosamente",

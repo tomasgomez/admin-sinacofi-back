@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { montserrat } from "@/utils/fonts";
 
-const ModalDecision = ({
+const DecisionModal = ({
   isOpen,
   title,
   onClose,
@@ -92,4 +92,4 @@ const ModalDecision = ({
   );
 };
 
-export default ModalDecision;
+export default DecisionModal;

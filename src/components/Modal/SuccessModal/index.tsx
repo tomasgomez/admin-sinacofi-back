@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { montserrat } from "@/utils/fonts";
 
-const ModalSuccess = ({
+const SuccessModal = ({
   isOpen,
   title,
   onClose,
@@ -75,4 +75,4 @@ const ModalSuccess = ({
   );
 };
 
-export default ModalSuccess;
+export default SuccessModal;

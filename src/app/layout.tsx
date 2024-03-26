@@ -10,8 +10,8 @@ import { theme } from "@/components/Theme";
 import { MyContexLayout } from "./context";
 import { useState } from "react";
 import { ErrorModal } from "@/components/Modal/ErrorModal";
-import ModalSuccess from "@/components/Modal/ModalSuccess";
-import ModalDecision from "@/components/Modal/ModalDecision";
+import SuccessModal from "@/components/Modal/SuccessModal";
+import DecisionModal from "@/components/Modal/DecisionModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -71,7 +71,7 @@ export default function RootLayout({
             {/* /////////////////////////////////////////////////////////// */}
 
             {/* ///////////////////////Modal Success///////////////////////// */}
-            <ModalSuccess
+            <SuccessModal
               isOpen={modalState?.isOpen && modalState.type === "success"}
               onClose={() => {
                 modalState?.onConfirm && modalState.onConfirm();
@@ -83,7 +83,7 @@ export default function RootLayout({
             {/* /////////////////////////////////////////////////////////// */}
 
             {/* ///////////////////////Modal Decision///////////////////////// */}
-            <ModalDecision
+            <DecisionModal
               isOpen={modalState?.isOpen && modalState.type === "decision"}
               onClose={() => {
                 modalState?.onClose && modalState.onClose();
