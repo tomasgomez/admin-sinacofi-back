@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import { StyledTabCell } from "./style";
 import { Data, Order } from "./type";
 import { getComparator, stableSort } from "./utils";
+import { TableContentLoader } from "./table-content-loader";
 
 type TablePropsType = {
   withCheckbox?: boolean;
@@ -22,6 +23,8 @@ type TablePropsType = {
   rowOptions?: any;
   defaultOrderKey?: keyof Data;
   minWidth?: number | string;
+  loading?: boolean;
+  loadingMessage?: string;
 };
 
 export default function EnhancedTable({
@@ -34,6 +37,8 @@ export default function EnhancedTable({
   rowOptions = {},
   defaultOrderKey,
   minWidth = 750,
+  loading,
+  loadingMessage = "Cargando Registros..."
 }: TablePropsType) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>(
@@ -128,7 +133,9 @@ export default function EnhancedTable({
             columns={columns}
           />
           <TableBody>
-            {visibleRows.map((row, index) => {
+            {loading 
+              ? <TableContentLoader loadingMessage={loadingMessage}/> 
+              : visibleRows.map((row, index) => {
               // const isItemSelected = isSelected(row.rut);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (

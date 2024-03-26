@@ -138,9 +138,7 @@ const Users = () => {
         ]}
         withSearchBar
       />
-      {!loading && (
-        <EnhancedTable rows={data} columns={columns} />
-      )}
+      <EnhancedTable rows={data} columns={columns} loading={loading} />
       {modalState.open && <EditUserModal data={modalState.data} open={modalState.open} onClose={onCloseModal} />}
     </div>
   )
