@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalFooter, ModalProps } from "../Modal";
+import { Modal, ModalFooter, ModalProps } from "..";
 import { Button, Stack, Typography } from "@mui/material";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { montserrat } from "@/utils/fonts";

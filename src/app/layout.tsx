@@ -9,9 +9,9 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "@/components/Theme";
 import { MyContexLayout } from "./context";
 import { useState } from "react";
-import { ErrorModal } from "@/components/error-modal";
-import ModalSuccess from "@/components/ModalSuccess";
-import ModalDecision from "@/components/ModalDecision";
+import { ErrorModal } from "@/components/Modal/ErrorModal";
+import ModalSuccess from "@/components/Modal/ModalSuccess";
+import ModalDecision from "@/components/Modal/ModalDecision";
 
 const inter = Inter({ subsets: ["latin"] });
 
