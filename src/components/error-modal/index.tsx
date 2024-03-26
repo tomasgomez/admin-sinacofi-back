@@ -6,8 +6,8 @@ import { montserrat } from "@/utils/fonts";
 
 export type ErrorModalTypes = ModalProps & {
   title: string;
-  message: string;
-  onCancel: () => void;
+  body: React.ReactNode;
+  onClose: () => void;
   onRetry: () => void;
 };
 
@@ -30,11 +30,11 @@ export function ErrorModal(props: ErrorModalTypes) {
         >
           {props.title}
         </Typography>
-        <Typography fontSize={"14px"}>{props.message}</Typography>
+        {props.body}
       </Stack>
       <ModalFooter placeContent="center" sx={{ px: 0, pb: 0 }}>
         <Button
-          onClick={props.onCancel}
+          onClick={props.onClose}
           variant="outlined"
           sx={{
             paddingX: 2,

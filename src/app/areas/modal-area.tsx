@@ -16,16 +16,15 @@ import {
   formatId,
 } from "./utils";
 import { conectivityTypeOptions } from "./contants";
+import { MyContexLayout } from "@/app/context";
+import { updateData } from "./api-calls";
 
 const ModalAreaContent = ({ onClose }: { onClose: any }) => {
-  const {
-    setIsModalSuccessOpen,
-    isEdit,
-    selectedRow,
-    setDataModal,
-    setIsEditConfirmationModalOpen,
-    setIsErrorModalOpen,
-  } = React.useContext(MyContexArea) as any;
+  const { isEdit, selectedRow, getNewData } = React.useContext(
+    MyContexArea
+  ) as any;
+
+  const { setModalState } = React.useContext(MyContexLayout) as any;
 
   const [institutions, setInstitutions] = React.useState<any[]>([]);
 
@@ -52,16 +51,52 @@ const ModalAreaContent = ({ onClose }: { onClose: any }) => {
 
   const handleSave = async (modalData: any, isEdit?: boolean) => {
     if (isEdit) {
-      setDataModal(modalData);
-      setIsEditConfirmationModalOpen(true);
+      setModalState({
+        type: "decision",
+        title: "¿Quieres Editar esta área?",
+        body: (
+          <Typography
+            fontSize={14}
+            fontWeight={400}
+            style={{ paddingBottom: 16 }}
+          >
+            {modalData?.id} - {modalData?.name}
+          </Typography>
+        ),
+        isOpen: true,
+        onConfirm: async () => {
+          await updateData(modalData?.id, modalData);
+          onClose(true);
+        },
+      });
     } else {
       try {
         await createData(modalData);
-        setDataModal({ code: modalData?.id, area: modalData?.name });
         onClose(true);
-        setIsModalSuccessOpen(true);
+        setModalState({
+          type: "success",
+          title: "Área Creada Exitosamente",
+          body: (
+            <>
+              <Typography fontSize={14} fontWeight={400}>
+                Codigo: {modalData?.id || "-"}
+              </Typography>
+              <Typography fontSize={14} fontWeight={400}>
+                Area: {modalData?.name || "-"}
+              </Typography>
+            </>
+          ),
+          isOpen: true,
+          onConfirm: () => getNewData(),
+        });
       } catch (error) {
-        setIsErrorModalOpen(true);
+        setModalState({
+          type: "error",
+          title: "Lo sentimos no se pudo crear el área.",
+          body: <Typography>El código de área ya esta asignado.</Typography>,
+          isOpen: true,
+          onClose: () => onClose(),
+        });
       }
     }
   };
@@ -348,7 +383,7 @@ const ModalArea = ({
   return (
     <div>
       <Modal maxWidth={700} open={isModalOpen} onClose={() => onClose(false)}>
-        <ModalAreaContent onClose={() => onClose(false)} />
+        <ModalAreaContent onClose={onClose} />
       </Modal>
     </div>
   );

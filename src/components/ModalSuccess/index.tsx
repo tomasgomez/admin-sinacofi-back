@@ -7,13 +7,11 @@ const ModalSuccess = ({
   isOpen,
   title,
   onClose,
-  code,
-  area,
+  body,
 }: {
   isOpen: boolean;
   title: string;
-  code: string;
-  area: string;
+  body: React.ReactNode;
   onClose: any;
 }) => {
   return (
@@ -53,12 +51,7 @@ const ModalSuccess = ({
               }}
               width={260}
             >
-              <Typography fontSize={14} fontWeight={400}>
-                Codigo: {code || "-"}
-              </Typography>
-              <Typography fontSize={14} fontWeight={400}>
-                Area: {area || "-"}
-              </Typography>
+              {body}
             </Box>
           </Box>
           <Button

@@ -7,14 +7,12 @@ const ModalDecision = ({
   isOpen,
   title,
   onClose,
-  code,
-  area,
+  body,
   onConfirm,
 }: {
   isOpen: boolean;
   title: string;
-  code: string;
-  area: string;
+  body: any;
   onClose: any;
   onConfirm: any;
 }) => {
@@ -47,13 +45,7 @@ const ModalDecision = ({
             >
               {title}
             </Typography>
-            <Typography
-              fontSize={14}
-              fontWeight={400}
-              style={{ paddingBottom: 16 }}
-            >
-              {code} - {area}
-            </Typography>
+            {body}
           </Box>
           <Box
             sx={{

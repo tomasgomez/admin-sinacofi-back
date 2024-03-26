@@ -6,13 +6,11 @@ import Header from "@/components/Table/header";
 import { columns, rowOptions } from "./contants";
 import ModalArea from "./modal-area";
 import { EditOutlined } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { getData, deleteData, updateData } from "./api-calls";
-import ModalSuccess from "@/components/ModalSuccessArea";
 import { MyContexArea } from "./context";
-import ModalDecision from "@/components/ModalDecisionArea";
-import { ErrorModal } from "@/components/error-modal";
+import { MyContexLayout } from "@/app/context";
 
 const Areas = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,13 +18,8 @@ const Areas = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [selectedRow, setSelectedRow] = useState<Data | null>(null);
-  const [isModalSuccessOpen, setIsModalSuccessOpen] = useState<boolean>(false);
-  const [isEditConfirmationModalOpen, setIsEditConfirmationModalOpen] =
-    useState<boolean>(false);
-  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
-    useState<boolean>(false);
-  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
-  const [dataModal, setDataModal] = useState<any>({});
+
+  const { setModalState } = React.useContext(MyContexLayout) as any;
 
   const getNewData = async () => {
     setLoading(true);
@@ -90,11 +83,26 @@ const Areas = () => {
             <EditOutlined fontSize="small" />
           </IconButton>
           <IconButton
-            aria-label="Editar"
+            aria-label="Delete"
             size="small"
             onClick={() => {
-              setDataModal({ id: row.id, name: row?.name });
-              setIsDeleteConfirmationModalOpen(true);
+              setModalState({
+                type: "decision",
+                title: "¿Quieres eliminar esta área y toda su configuración?",
+                body: (
+                  <Typography
+                    fontSize={14}
+                    fontWeight={400}
+                    style={{ paddingBottom: 16 }}
+                  >
+                    {row?.id} - {row?.name}
+                  </Typography>
+                ),
+                isOpen: true,
+                onConfirm: async () => {
+                  await handleDelete(row?.id);
+                },
+              });
             }}
           >
             <DeleteOutlineIcon fontSize="small" />
@@ -111,12 +119,9 @@ const Areas = () => {
   return (
     <MyContexArea.Provider
       value={{
-        setIsModalSuccessOpen,
+        getNewData,
         isEdit,
         selectedRow,
-        setDataModal,
-        setIsEditConfirmationModalOpen,
-        setIsErrorModalOpen,
       }}
     >
       <div
@@ -145,58 +150,6 @@ const Areas = () => {
         )}
       </div>
       <ModalArea isModalOpen={isModalOpen} onClose={handleCloseModal} />
-      <ModalSuccess
-        isOpen={isModalSuccessOpen}
-        onClose={() => {
-          setIsModalSuccessOpen(false);
-          getNewData();
-        }}
-        title="Área Creada Exitosamente"
-        code={dataModal?.code}
-        area={dataModal?.area}
-      />
-      <ModalDecision
-        isOpen={isDeleteConfirmationModalOpen}
-        onClose={() => {
-          setIsDeleteConfirmationModalOpen(false);
-          setDataModal({});
-        }}
-        onConfirm={async () => {
-          setIsDeleteConfirmationModalOpen(false);
-          await handleDelete(dataModal?.id);
-          setDataModal({});
-        }}
-        title="¿Quieres eliminar esta área y toda su configuración?"
-        code={dataModal?.id}
-        area={dataModal?.name}
-      />
-      <ModalDecision
-        isOpen={isEditConfirmationModalOpen}
-        onClose={() => {
-          setIsEditConfirmationModalOpen(false);
-          setDataModal({});
-        }}
-        onConfirm={async () => {
-          setIsEditConfirmationModalOpen(false);
-          await updateData(dataModal.id, dataModal);
-          handleCloseModal(true);
-          setDataModal({});
-        }}
-        title="¿Quieres Editar esta área?"
-        code={dataModal?.id}
-        area={dataModal?.name}
-      />
-      <ErrorModal
-        title="Lo sentimos no se pudo crear el área."
-        message="El código de área ya esta asignado."
-        withoutClose
-        onCancel={() => {
-          setIsErrorModalOpen(false);
-          handleCloseModal(false);
-        }}
-        onRetry={() => setIsErrorModalOpen(false)}
-        open={isErrorModalOpen}
-      />
     </MyContexArea.Provider>
   );
 };
