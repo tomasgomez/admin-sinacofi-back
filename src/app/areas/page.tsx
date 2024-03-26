@@ -134,15 +134,14 @@ const Areas = () => {
           addLabelButton="Agregar Área"
           handleAddLabelButton={() => setIsModalOpen(true)}
         />
-        {!loading && (
-          <EnhancedTable
-            withSwitch
-            rowOptions={rowOptions}
-            rows={data}
-            columns={newColumns}
-            onChangeSwitch={handleOnChangeSwitch}
-          />
-        )}
+        <EnhancedTable
+          withSwitch
+          rowOptions={rowOptions}
+          rows={data}
+          columns={newColumns}
+          loading={loading}
+          onChangeSwitch={handleOnChangeSwitch}
+        />
       </div>
       <ModalArea isModalOpen={isModalOpen} onClose={handleCloseModal} />
       <ModalSuccess
